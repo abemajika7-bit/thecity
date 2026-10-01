@@ -1,0 +1,2454 @@
+<!DOCTYPE html>
+<html lang="ko" class="dark">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Worldview — ECLIPSE & ARCHIVE</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&amp;family=Noto+Serif+KR:wght@200;300;400;600;700&amp;family=Jost:wght@200;300;400;500;600&amp;family=Great+Vibes&amp;family=Chewy&amp;family=Black+Han+Sans&amp;display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+    :root {
+        color-scheme: dark;
+        --serif: 'Cormorant Garamond', 'Noto Serif KR', serif;
+        --kr: 'Noto Serif KR', 'Cormorant Garamond', serif;
+        --sans: 'Jost', 'Noto Serif KR', sans-serif;
+        --gold: #d6b26e;
+        
+        --color-gold: var(--gold);
+        --color-gold-glow: rgba(214, 178, 110, 0.4);
+        --color-periwinkle: #8f9cff;
+        --color-deep-indigo: #1a2a8a;
+        --color-abyssal-dark: #0e1030;
+        --color-void-bg: #05050f;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+        background: #03030a;
+        color: #eee;
+        font-family: var(--sans);
+        overflow: hidden;
+        width: 100%;
+        height: 100vh;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .page-wrapper {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.8s;
+        z-index: 1;
+    }
+    .page-wrapper.active {
+        opacity: 1;
+        visibility: visible;
+        z-index: 10;
+    }
+
+    #page-homepage {
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+    
+    .sec { position: relative; min-height: 100vh; overflow: hidden; }
+    .a { position: absolute; }
+    .cap { font-size: 11px; letter-spacing: .32em; text-transform: uppercase; opacity: .6; font-family: var(--sans); }
+
+    #v1 { background: radial-gradient(ellipse at 50% 45%, #0e1030, #05050f 65%); font-family: var(--serif); }
+    .dust { inset: 0; background-image: radial-gradient(1px 1px at 8% 12%, #fff, transparent), radial-gradient(1px 1px at 22% 68%, var(--gold), transparent), radial-gradient(1.3px 1.3px at 41% 9%, #fff, transparent), radial-gradient(1px 1px at 63% 82%, #fff, transparent), radial-gradient(1px 1px at 77% 24%, var(--gold), transparent), radial-gradient(1.2px 1.2px at 92% 55%, #fff, transparent), radial-gradient(1px 1px at 55% 40%, #8f9cff, transparent), radial-gradient(1px 1px at 12% 88%, #fff, transparent); animation: tw 6s infinite alternate; }
+    @keyframes tw { to { opacity: .4; } }
+    
+    .blob { background: linear-gradient(140deg, #8d9db8, #2b3550 60%, transparent); opacity: .42; filter: blur(1.5px); }
+    .b1 { left: 3vw; top: 18vh; width: 26vw; height: 52vh; border-radius: 60% 30% 55% 40%/40% 60% 30% 55%; transform: rotate(-14deg); }
+    .b2 { right: 4vw; top: 6vh; width: 20vw; height: 30vh; border-radius: 30% 60% 40% 55%/55% 30% 60% 40%; transform: rotate(20deg); opacity: .25; }
+    .b3 { left: 30vw; bottom: 2vh; width: 40vw; height: 16vh; border-radius: 50%; opacity: .22; }
+    
+    .ring { border: 1px solid rgba(214, 178, 110, .55); border-radius: 50%; animation: spin 90s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .r1 { width: 34vw; aspect-ratio: 1; left: 2vw; top: 10vh; border-color: rgba(214, 178, 110, .35); }
+    .r2 { width: 30vw; aspect-ratio: 1; right: 2vw; top: 8vh; border-width: 1.5px; animation-direction: reverse; }
+    .r3 { width: 20vw; aspect-ratio: 1; right: 9vw; top: 30vh; border-color: rgba(214, 178, 110, .3); }
+    .r4 { width: 14vw; aspect-ratio: 1; left: 8vw; top: 52vh; border-color: rgba(255, 255, 255, .25); }
+
+    .oval { left: 50%; top: 12vh; width: min(42vw, 460px); aspect-ratio: 1/1; transform: translateX(-50%); background: radial-gradient(circle at 50% 30%, #14100e, #020204 70%); border: 1.5px solid var(--gold); border-radius: 50%; box-shadow: 0 0 60px rgba(214, 178, 110, .25), inset 0 0 40px rgba(0, 0, 0, .9); overflow: hidden; display: flex; align-items: center; justify-content: center; position: absolute; }
+    .oval::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 22%; background: repeating-linear-gradient(90deg, #000 0 6px, transparent 6px 11px); -webkit-mask: linear-gradient(0deg, #000, transparent); mask: linear-gradient(0deg, #000, transparent); pointer-events: none; }
+
+    .phases { position: absolute; left: 0; right: 0; top: 50%; transform: translateY(-50%); display: flex; justify-content: space-around; padding: 0 8%; width: 100%; }
+    .mn { width: min(4vw, 32px); aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #f6c288, #c9743a); position: relative; overflow: hidden; box-shadow: 0 0 14px rgba(240, 160, 80, .45); }
+    .mn.full { background: radial-gradient(circle at 35% 35%, #ffe8b6, #f6c288); box-shadow: 0 0 18px rgba(255, 210, 120, .65); }
+    .mn.full::after { display: none; }
+    .mn:not(.full)::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: #0a0808; transform: translateX(var(--o)); }
+
+    .arch { width: 15vw; height: 46vh; top: 31vh; border-radius: 999px 999px 0 0; background: radial-gradient(1px 1px at 30% 20%, #fff, transparent), radial-gradient(1.5px 1.5px at 70% 45%, #fff, transparent), radial-gradient(1px 1px at 40% 70%, #cfe, transparent), linear-gradient(180deg, #1a2a8a, #0a1250 70%, #060a2e); transition: .7s; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; cursor: pointer; }
+    .arch::before { content: ""; position: absolute; inset: -9px -9px 0; border: 1px solid rgba(214, 178, 110, .7); border-bottom: 0; border-radius: 999px 999px 0 0; }
+    .arch:hover { transform: translateY(-12px); filter: brightness(1.3); }
+
+    .arch-content { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px; z-index: 2; padding: 0 10px; text-align: center; }
+
+    .ornate-icon { width: 150px; height: 150px; display: flex; align-items: center; justify-content: center; position: relative; }
+    .ornate-icon svg { width: 145px; height: 145px; opacity: 0.98; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+    .badge-label { font-size: 18px; letter-spacing: .35em; text-transform: uppercase; color: #fff; font-family: var(--sans); font-weight: 400; line-height: 1.6; margin-top: 12px; }
+
+    .ar1 { left: 14vw; } .ar2 { right: 14vw; }
+    
+    .star { color: #fff; opacity: .8; font-size: 16px; animation: tw 3s infinite alternate; }
+    .hang { width: 1px; background: linear-gradient(#fff8, transparent); top: 74vh; }
+
+    #v1 .ttl { left: 0; right: 0; bottom: 12vh; text-align: center; pointer-events: none;}
+    #v1 .ttl h1 { font-family: var(--kr); font-weight: 200; font-size: clamp(28px, 4.4vw, 56px); letter-spacing: .9em; padding-left: .9em; position: relative; display: inline-block; }
+    #v1 .ttl h1::after { content: ""; position: absolute; left: -4vw; right: -4vw; top: 52%; border-top: 1px solid rgba(255, 255, 255, .6); }
+    #v1 .ttl .cap { display: block; margin-top: 12px; letter-spacing: .7em; font-size: 13px; }
+
+    #v1 nav { left: 0; right: 0; bottom: calc(6vh + 20px); display: flex; justify-content: center; gap: 36px; font-size: 14px; letter-spacing: .4em; text-transform: uppercase; z-index: 5; }
+    #v1 nav a { opacity: .6; transition: .4s; padding-bottom: 3px; border-bottom: 1px solid transparent; cursor: pointer; }
+    #v1 nav a:hover { opacity: 1; color: var(--gold); border-color: var(--gold); }
+
+    .s2a { padding: 14vh 5vw; background: linear-gradient(#05050f, #0a0c26 40%, #05050f); text-align: center; }
+    .s2a h2 { font-family: var(--kr); font-weight: 200; font-size: clamp(44px, 10vw, 140px); line-height: .9; letter-spacing: .06em; position: relative; z-index: 2; display: inline-block; }
+    .s2a h2 em { font-family: var(--serif); font-style: italic; color: var(--gold); font-size: .55em; display: block; letter-spacing: .2em; margin-left: 0; }
+    .row { display: flex; gap: 1.6vw; align-items: flex-end; margin-top: 8vh; position: relative; }
+    .pa { flex: 1; position: relative; border-top-left-radius: 999px; border-top-right-radius: 999px; background: linear-gradient(180deg, #141e70, #070b34); border: 1px solid rgba(214, 178, 110, .5); border-bottom: 0; padding: 0 0 18px; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; transition: .7s; overflow: hidden; cursor: pointer; }
+    .pa:nth-child(1) { height: 30vh; } .pa:nth-child(2) { height: 42vh; } .pa:nth-child(3) { height: 54vh; } .pa:nth-child(4) { height: 64vh; } .pa:nth-child(5) { height: 54vh; } .pa:nth-child(6) { height: 42vh; } .pa:nth-child(7) { height: 34vh; }
+    .pa:hover { background: linear-gradient(180deg, #2a3aa8, #0c1250); transform: translateY(-14px); }
+    .pa b { font-family: var(--serif); font-weight: 300; font-size: clamp(26px, 4.1vw, 56px); color: transparent; -webkit-text-stroke: 1px var(--gold); }
+    .pa .mn { width: 34%; margin-bottom: auto; margin-top: 22%; }
+    .pa span { font-size: 12px; letter-spacing: .3em; opacity: .75; margin-top: 6px; text-align: center; }
+
+    .worldview-content { max-width: 900px; margin: 8vh auto 0 auto; text-align: left; font-family: var(--sans); color: #d1d5db; line-height: 1.8; }
+    .worldview-content h3 { font-family: var(--serif); color: var(--gold); font-size: 24px; letter-spacing: 0.15em; margin-top: 40px; margin-bottom: 16px; border-bottom: 1px solid rgba(214, 178, 110, 0.3); padding-bottom: 8px; display: flex; align-items: center; gap: 10px; }
+    .worldview-content p { margin-bottom: 16px; font-size: 15px; }
+    .worldview-content ul { list-style: none; padding-left: 0; margin-bottom: 20px; }
+    .worldview-content li { position: relative; padding-left: 18px; margin-bottom: 8px; font-size: 14.5px; }
+    .worldview-content li::before { content: "✦"; position: absolute; left: 0; color: var(--gold); font-size: 11px; top: 2px; }
+    .worldview-content blockquote { border-left: 2px solid var(--gold); padding-left: 16px; margin: 16px 0; font-style: italic; color: #f3d99b; background: rgba(214,178,110,0.05); padding: 12px 16px; border-radius: 0 6px 6px 0; }
+
+    .info { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4vw; max-width: 900px; margin: 10vh auto 0 auto; font-family: var(--kr); font-weight: 200; font-size: 17px; line-height: 2.2; text-align: center; }
+    .info div { padding: 0 2vw; }
+    .info div .cap { font-size: 12px; display: block; margin-top: 6px; }
+
+    #snow-canvas { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 4; }
+
+    @media(max-width: 700px) {
+        .arch { display: none; }
+        .info { grid-template-columns: 1fr; }
+        .oval { width: 72vw; }
+        .pa span { display: none; }
+    }
+
+    #page-archive {
+        background: radial-gradient(ellipse at 50% 45%, #0e1030, #05050f 65%);
+    }
+    #cityCanvas, #archive-snow-canvas {
+        -webkit-user-select: none;
+        user-select: none;
+        -webkit-touch-callout: none;
+    }
+    #page-archive textarea, #page-archive input {
+        -webkit-user-select: text;
+        user-select: text;
+    }
+
+    .font-serif-gothic { font-family: 'Cormorant Garamond', 'Noto Serif KR', serif; }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: rgba(6, 10, 46, 0.8); }
+    ::-webkit-scrollbar-thumb { background: #d6b26e; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #8f9cff; }
+
+    .gothic-border {
+        border: 1.5px solid rgba(214, 178, 110, 0.5);
+        box-shadow: 0 0 35px rgba(26, 42, 138, 0.4), inset 0 0 15px rgba(143, 156, 255, 0.15);
+    }
+
+    .gothic-glass {
+        background: rgba(10, 14, 42, 0.85);
+        -webkit-backdrop-filter: blur(12px);
+        backdrop-filter: blur(12px);
+    }
+
+    .arch:focus-visible { outline: 2px solid var(--gold); outline-offset: 8px; }
+    #cityCanvas { touch-action: none; }
+
+    /* 구역 바로가기 독 (A~G) */
+    #sector-dock { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(14px + env(safe-area-inset-bottom, 0px)); z-index: 20; display: flex; gap: 6px; padding: 6px; border-radius: 999px; background: rgba(7,10,36,.82); border: 1px solid rgba(214,178,110,.35); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); box-shadow: 0 0 20px rgba(5,5,15,.7); }
+    #sector-dock button { width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--c); color: var(--c); background: rgba(14,19,61,.9); font-family: var(--serif); font-weight: 700; font-size: 15px; line-height: 1; cursor: pointer; transition: background .2s, color .2s, transform .2s; -webkit-tap-highlight-color: transparent; }
+    #sector-dock button:hover, #sector-dock button.on { background: var(--c); color: #05050f; }
+    #sector-dock button:active { transform: scale(.92); }
+    @media (max-width: 380px) { #sector-dock { gap: 4px; padding: 5px; } #sector-dock button { width: 32px; height: 32px; font-size: 14px; } }
+
+    /* 사이드바: 연관 세력/캐릭터 */
+    .rel-label { font-family: var(--sans); font-size: 10px; letter-spacing: .28em; color: rgba(255,255,255,.45); margin-bottom: 6px; }
+    .rel-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .rel-chip { display: inline-flex; flex-direction: column; align-items: flex-start; gap: 2px; padding: 8px 12px; border-radius: 10px; border: 1px solid color-mix(in srgb, var(--c) 55%, transparent); background: rgba(6,10,40,.8); color: #fff; font-family: var(--kr); font-size: 13px; text-align: left; cursor: pointer; transition: border-color .2s, background .2s; }
+    .rel-chip small { font-family: var(--sans); font-size: 10px; letter-spacing: .06em; color: var(--c); opacity: .85; }
+    .rel-chip:hover { border-color: var(--c); background: rgba(21,28,82,.9); }
+    .rel-empty { font-size: 12px; color: rgba(255,255,255,.4); }
+
+    /* 삭제 글리치: 소개문/필드에서 [[텍스트]] 로 표시 */
+    .glitch { font-weight: 700; color: #fff; animation: glitch-shift 3.4s infinite steps(1, end); }
+    @keyframes glitch-shift {
+        0%, 82%, 100% { text-shadow: 1px 0 rgba(255,46,99,.45), -1px 0 rgba(34,211,238,.45); opacity: 1; }
+        84% { text-shadow: 3px 0 #ff2e63, -3px 0 #22d3ee; opacity: .8; }
+        86% { text-shadow: -2px 1px #ff2e63, 2px -1px #22d3ee; opacity: 1; }
+        88% { text-shadow: 4px 0 #ff2e63, -4px 0 #22d3ee; opacity: .55; }
+        90% { text-shadow: 1px 0 #ff2e63, -1px 0 #22d3ee; opacity: 1; }
+    }
+    @media (prefers-reduced-motion: reduce) { .glitch { animation: none; } }
+
+    .mobile-entry { display: none; left: 0; right: 0; top: calc(12vh + 72vw + 28px); justify-content: center; gap: 12px; z-index: 5; }
+    .mobile-entry button { font-family: var(--sans); font-size: 13px; letter-spacing: .25em; padding: 12px 18px; border: 1px solid rgba(214,178,110,.6); border-radius: 999px; background: rgba(10,14,42,.75); color: #fff; cursor: pointer; }
+    .mobile-entry button:active { background: rgba(214,178,110,.25); }
+    @media (max-width: 700px) { .mobile-entry { display: flex; } }
+
+    #page-characters { overflow-y: auto; overflow-x: hidden; background: radial-gradient(ellipse at 50% 20%, #0e1030, #05050f 65%); }
+    #char-snow-canvas { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 5; }
+    .char-filter { font-family: var(--sans); font-size: 12px; letter-spacing: .25em; padding: 8px 18px; border-radius: 999px; border: 1px solid rgba(214,178,110,.35); color: rgba(255,255,255,.7); background: rgba(10,14,42,.6); cursor: pointer; transition: .3s; }
+    .char-filter:hover { border-color: var(--gold); color: #fff; }
+    .char-filter[aria-pressed="true"] { border-color: var(--gold); color: var(--gold); background: rgba(214,178,110,.12); }
+    .char-card { position: relative; display: flex; flex-direction: column; text-align: left; color: inherit; font: inherit; cursor: pointer; overflow: hidden; border-radius: 14px; border: 1px solid rgba(214,178,110,.4); background: linear-gradient(180deg, rgba(20,30,112,.55), rgba(7,11,52,.9)); transition: transform .4s, border-color .4s, box-shadow .4s; }
+    .char-card:hover, .char-card:focus-visible { transform: translateY(-6px); border-color: var(--gold); box-shadow: 0 10px 30px rgba(26,42,138,.55), 0 0 24px rgba(214,178,110,.2); outline: none; }
+    .char-portrait { position: relative; aspect-ratio: 4 / 5; display: flex; align-items: center; justify-content: center; overflow: hidden; background: radial-gradient(circle at 50% 35%, rgba(26,42,138,.55), #05050f 75%); }
+    .char-portrait img { width: 100%; height: 100%; object-fit: cover; }
+    .char-portrait .glyph { font-size: 54px; color: rgba(214,178,110,.55); }
+    .char-badge { position: absolute; top: 10px; left: 10px; font-size: 10px; letter-spacing: .25em; padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(214,178,110,.5); background: rgba(5,5,15,.75); color: var(--gold); }
+    .char-badge.guide { color: var(--color-periwinkle); border-color: rgba(143,156,255,.5); }
+    .char-badge.other { color: #cbd5e1; border-color: rgba(203,213,225,.4); }
+    .char-grade { position: absolute; top: 6px; right: 14px; font-family: var(--serif); font-size: 30px; color: transparent; -webkit-text-stroke: 1px var(--gold); }
+    .char-body { padding: 14px 16px 18px; }
+    .char-body .code { font-family: monospace; font-size: 10px; letter-spacing: .25em; color: var(--color-periwinkle); }
+    .char-body h3 { font-family: var(--kr); font-weight: 400; font-size: 20px; color: #fff; margin: 4px 0 6px; }
+    .char-body p { font-size: 12.5px; line-height: 1.7; color: #cbd5e1; }
+
+    #char-detail { position: fixed; inset: 0; z-index: 40; display: none; align-items: center; justify-content: center; padding: 20px; }
+    #char-detail.open { display: flex; }
+    #char-detail-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,.65); }
+    .cd-panel { position: relative; width: min(860px, 100%); overflow: hidden; border-radius: 16px; }
+    #cd-body { max-height: 88vh; overflow-y: auto; padding: 26px; }
+    #cd-close { position: absolute; top: 10px; right: 10px; width: 32px; height: 32px; border-radius: 999px; border: 1px solid rgba(214,178,110,.4); color: var(--gold); background: rgba(5,5,15,.75); cursor: pointer; z-index: 2; }
+    #cd-close:hover { background: rgba(214,178,110,.2); }
+
+    /* ---------- 탭 그리드 ---------- */
+    .char-grid { display: grid; gap: 20px; grid-template-columns: 1fr; }
+    .char-grid.mode-teams { max-width: 920px; margin: 0 auto; }
+    @media (min-width: 640px) {
+        .char-grid.mode-teams, .char-grid.mode-solo { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (min-width: 1024px) { .char-grid.mode-solo { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
+    /* ---------- 팀 카드 (사람 없이 팀만) ---------- */
+    .team-card { position: relative; display: flex; flex-direction: column; align-items: center; text-align: center; padding: 44px 24px 26px; min-height: 300px; color: inherit; font: inherit; cursor: pointer; overflow: hidden; border-radius: 170px 170px 16px 16px; border: 1px solid rgba(214,178,110,.5); background: linear-gradient(180deg, #141e70, #070b34); transition: transform .4s, border-color .4s, box-shadow .4s; }
+    .team-card::before { content: ""; position: absolute; inset: 7px 7px 0; border: 1px solid rgba(214,178,110,.25); border-bottom: 0; border-radius: 164px 164px 10px 10px; pointer-events: none; }
+    .team-card:hover, .team-card:focus-visible { transform: translateY(-8px); border-color: var(--gold); box-shadow: 0 14px 34px rgba(26,42,138,.55), 0 0 26px rgba(214,178,110,.2); outline: none; }
+    .tc-no { font-family: monospace; font-size: 10px; letter-spacing: .35em; color: var(--color-periwinkle); }
+    .team-card { container-type: inline-size; }
+    .tc-logo { height: 120px; margin: 8px 0 4px; max-width: 100%; display: flex; align-items: center; justify-content: center; font-size: 44px; font-size: clamp(30px, 12cqw, 54px); }
+    .tc-name { font-family: var(--kr); font-weight: 300; font-size: 14px; letter-spacing: .4em; padding-left: .4em; color: rgba(255,255,255,.8); }
+    .tc-unit { font-size: 12px; letter-spacing: .3em; color: rgba(255,255,255,.6); margin-top: 8px; }
+    .tc-tagline { font-size: 12.5px; line-height: 1.7; color: #cbd5e1; margin-top: 10px; }
+    .tc-meta { margin-top: 16px; font-family: monospace; font-size: 11px; letter-spacing: .2em; color: #cbd5e1; }
+    .tc-cta { margin-top: auto; padding-top: 18px; font-size: 11px; letter-spacing: .35em; color: var(--gold); }
+    .team-card.is-empty > *:not(.tc-logo) { opacity: .6; }
+    .team-card.is-empty { cursor: default; border-style: dashed; border-color: rgba(214,178,110,.35); background: linear-gradient(180deg, rgba(20,30,112,.3), rgba(7,11,52,.6)); }
+    .team-card.is-empty:hover { transform: none; box-shadow: none; border-color: rgba(214,178,110,.5); }
+    .team-card.is-empty .tc-cta { color: rgba(255,255,255,.45); }
+
+    /* ---------- 팀 상세 (세로 스크롤) ---------- */
+    #team-view { position: fixed; inset: 0; z-index: 40; display: none; flex-direction: column; background: radial-gradient(ellipse at 50% 0%, #141a52, #05050f 70%); }
+    #team-view.open { display: flex; }
+    .tv-head { flex: none; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; padding: 12px 20px; border-bottom: 1px solid rgba(214,178,110,.3); background: rgba(7,10,36,.92); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+    #tv-back { font-family: var(--sans); font-size: 12px; letter-spacing: .2em; padding: 7px 14px; border-radius: 999px; border: 1px solid rgba(143,156,255,.4); color: var(--color-periwinkle); background: #10153d; cursor: pointer; transition: .3s; }
+    #tv-back:hover { background: rgba(143,156,255,.2); border-color: var(--color-periwinkle); }
+    #tv-name { font-family: var(--kr); font-weight: 300; font-size: 22px; letter-spacing: .2em; color: var(--gold); line-height: 1.2; }
+    #tv-nav { margin-left: auto; display: flex; flex-wrap: wrap; gap: 8px; }
+    .tv-chip { font-family: var(--sans); font-size: 12px; letter-spacing: .1em; padding: 6px 14px; border-radius: 999px; border: 1px solid rgba(214,178,110,.3); color: rgba(255,255,255,.65); background: rgba(10,14,42,.6); cursor: pointer; transition: .3s; }
+    .tv-chip:hover, .tv-chip.on { border-color: var(--gold); color: var(--gold); background: rgba(214,178,110,.12); }
+    #tv-scroll { flex: 1; overflow-y: auto; overflow-x: hidden; padding: 0 20px; scroll-behavior: smooth; }
+    #tv-members { max-width: 900px; margin: 0 auto; padding-bottom: 40vh; }
+    .tv-member { padding: 48px 0 56px; border-bottom: 1px solid rgba(214,178,110,.2); }
+    .tv-member:last-child { border-bottom: 0; }
+    .tv-index { font-family: monospace; font-size: 11px; letter-spacing: .35em; color: var(--color-periwinkle); margin-bottom: 18px; }
+    .tv-member .ms-portrait { position: sticky; top: 24px; }
+    @media (max-width: 700px) { .tv-member .ms-portrait { position: static; } #tv-nav { margin-left: 0; width: 100%; } }
+
+    /* ---------- 캐릭터 시트 (팀 상세 / 개인 모달 공용) ---------- */
+    .member-sheet { display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: 26px; align-items: start; }
+    .ms-portrait .char-portrait { border-radius: 12px; border: 1px solid rgba(214,178,110,.4); }
+    .ms-code { display: block; }
+    .ms-name { font-family: var(--kr); font-weight: 400; font-size: 28px; color: var(--gold); margin: 4px 0 8px; }
+    .ms-summary { font-size: 14px; color: #e5e7eb; line-height: 1.8; margin-bottom: 14px; word-break: keep-all; }
+    .ms-fields { display: grid; grid-template-columns: 76px 1fr; gap: 8px 12px; font-size: 13px; padding: 14px 0; border-top: 1px solid rgba(214,178,110,.25); border-bottom: 1px solid rgba(214,178,110,.25); }
+    .ms-fields dt { font-family: monospace; font-size: 11px; letter-spacing: .2em; color: var(--color-periwinkle); padding-top: 2px; }
+    .ms-fields dd { color: #e5e7eb; }
+    .ms-desc strong, .ms-summary strong { color: #fff; font-weight: 700; }
+    .ms-desc em, .ms-summary em { font-style: italic; color: #f1e6cc; }
+    .ms-desc { margin-top: 14px; font-size: 13.5px; line-height: 1.95; color: #cbd5e1; white-space: pre-line; word-break: keep-all; }
+    @media (max-width: 700px) { .member-sheet { grid-template-columns: 1fr; } .ms-portrait { max-width: 220px; margin: 0 auto; } }
+
+    /* ---------- 시민 반응: 채팅 말풍선 + 이어지는 답글 ---------- */
+    .cm-box { margin-top: 24px; padding-top: 16px; border-top: 1px solid rgba(214,178,110,.25); }
+    .cm-title { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; font-family: monospace; font-size: 11px; letter-spacing: .3em; color: var(--color-periwinkle); }
+    .cm-thread { margin-bottom: 16px; }
+    .cm-row { display: flex; align-items: flex-start; gap: 10px; }
+    .cm-avatar { flex: none; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; color: #fff; background: hsl(var(--h, 230) 42% 32%); border: 1px solid rgba(255,255,255,.18); }
+    .cm-main { min-width: 0; }
+    .cm-meta { display: flex; align-items: center; gap: 6px; margin-bottom: 4px; font-size: 11.5px; }
+    .cm-author { color: #e2e8f0; font-weight: 600; }
+    .cm-role { font-size: 10px; color: #94a3b8; background: rgba(255,255,255,.06); padding: 1px 7px; border-radius: 999px; }
+    .cm-bubble { --bub: rgba(40,56,150,.45); position: relative; display: inline-block; max-width: 100%; padding: 9px 14px; border-radius: 0 16px 16px 16px; background: var(--bub); color: #e5e7eb; font-size: 13.5px; line-height: 1.65; word-break: keep-all; overflow-wrap: anywhere; }
+    .cm-bubble::before { content: ""; position: absolute; left: -7px; top: 0; width: 8px; height: 10px; background: var(--bub); clip-path: polygon(100% 0, 100% 100%, 0 0); }
+    .cm-mention { color: var(--gold); font-size: 12px; margin-right: 5px; }
+
+    .cm-replies { position: relative; display: flex; flex-direction: column; gap: 10px; margin: 10px 0 0 15px; padding-left: 26px; }
+    .cm-replies .cm-row { position: relative; }
+    .cm-replies .cm-row::before { content: ""; position: absolute; left: -26px; top: -10px; bottom: -10px; border-left: 2px solid rgba(214,178,110,.4); }
+    .cm-replies .cm-row:not(:last-child)::after { content: ""; position: absolute; left: -26px; top: 13px; width: 20px; border-top: 2px solid rgba(214,178,110,.4); }
+    .cm-replies .cm-row:last-child::before { bottom: auto; height: 23px; width: 20px; border-bottom: 2px solid rgba(214,178,110,.4); border-bottom-left-radius: 10px; }
+    .cm-replies .cm-avatar { width: 26px; height: 26px; font-size: 11px; }
+    .cm-row.is-reply .cm-bubble { --bub: rgba(214,178,110,.13); }
+
+    /* ---------- 홈: 인용구 밴드 / 프롤로그 / 구분선 ---------- */
+    .reveal { opacity: 0; transform: translateY(16px); transition: opacity 1.3s ease, transform 1.3s ease; transition-delay: var(--d, 0s); }
+    .reveal.in { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
+
+    .quote-band { position: relative; min-height: 70vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 18vh 6vw; background: #05050f; overflow: hidden; }
+    .quote-band::after { content: ""; position: absolute; left: 50%; top: 50%; width: min(70vw, 560px); aspect-ratio: 1; transform: translate(-50%, -50%); border: 1px solid rgba(214,178,110,.14); border-radius: 50%; pointer-events: none; }
+    .qb-line { position: absolute; top: 0; left: 50%; width: 1px; height: 12vh; background: linear-gradient(var(--gold), transparent); opacity: .7; }
+    .qb-line.qb-bottom { top: auto; bottom: 0; background: linear-gradient(transparent, var(--gold)); }
+    .qb-mark { color: var(--gold); font-size: 18px; letter-spacing: .6em; padding-left: .6em; margin-bottom: 28px; }
+    .qb-text { position: relative; z-index: 1; font-family: var(--kr); font-weight: 200; font-size: clamp(22px, 3.4vw, 40px); line-height: 1.9; letter-spacing: .14em; color: #f1e6cc; text-shadow: 0 0 28px rgba(214,178,110,.35); word-break: keep-all; }
+    .qb-en { position: relative; z-index: 1; margin-top: 28px; letter-spacing: .4em; font-size: 11px; }
+
+    .worldview-content .prologue { position: relative; margin: 14vh calc(50% - 50vw) 0; padding: 18vh 6vw 14vh; text-align: center; background: radial-gradient(ellipse at 50% 0%, rgba(26,42,138,.35), transparent 60%), linear-gradient(#05050f, #02020a 22%, #02020a 78%, #05050f); }
+    .prologue::before { content: ""; position: absolute; left: 50%; top: 0; width: 1px; height: 12vh; background: linear-gradient(transparent, var(--gold)); }
+    .worldview-content .prologue .prologue-cap { display: block; color: var(--gold); opacity: .8; letter-spacing: .6em; padding-left: .6em; }
+    .worldview-content .prologue-title { display: block; font-family: var(--kr); font-weight: 200; font-size: clamp(30px, 6vw, 72px); letter-spacing: .2em; padding: 0 0 0 .2em; margin: 18px 0 9vh; border: 0; color: #fff; text-shadow: 0 0 36px rgba(143,156,255,.4); }
+    .worldview-content .prologue p.pl-group { max-width: 620px; margin: 0 auto 9vh; font-family: var(--kr); font-weight: 300; font-size: clamp(16px, 1.9vw, 21px); line-height: 2.3; color: #e9e4d6; word-break: keep-all; }
+    .prologue .pl-group .reveal { display: block; margin-bottom: .55em; }
+    .worldview-content .prologue p.prologue-note { max-width: 520px; margin: 10vh auto 0; padding-top: 5vh; border-top: 1px solid rgba(214,178,110,.35); font-family: var(--serif); font-style: italic; font-size: 18px; letter-spacing: .12em; line-height: 1.9; color: var(--gold); }
+    .prologue-facts { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 22px; margin-top: 7vh; font-size: 12px; letter-spacing: .18em; color: #aab0c4; }
+    .prologue-facts strong { font-family: monospace; color: var(--gold); letter-spacing: .3em; }
+    .prologue-facts span + span::before, .prologue-facts strong + span::before { content: "/"; margin-right: 22px; color: rgba(214,178,110,.6); }
+    .prologue-facts strong + span::before { content: ""; margin: 0; }
+
+    .divider { display: flex; align-items: center; gap: 18px; margin: 56px 0 8px; color: var(--gold); }
+    .divider::before, .divider::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, transparent, rgba(214,178,110,.65)); }
+    .divider::after { background: linear-gradient(90deg, rgba(214,178,110,.65), transparent); }
+    .divider span { font-size: 13px; letter-spacing: .6em; padding-left: .6em; }
+
+    /* ---------- 팀 로고 타이포 (전부 흰색) ---------- */
+    .logo { display: inline-block; line-height: 1.1; white-space: nowrap; max-width: 100%; color: #fff; }
+    .logo-doberman { font-family: 'Great Vibes', 'Pinyon Script', 'Snell Roundhand', cursive; font-size: 1.45em; transform: rotate(-4deg); text-shadow: 0 0 22px rgba(255,255,255,.35); }
+    .logo-dayoff { font-family: 'Chewy', 'Fredoka', 'Comic Sans MS', cursive; letter-spacing: .03em; text-shadow: 0 .06em 0 rgba(0,0,0,.35); }
+    .logo-dayoff .ch { display: inline-block; }
+    .logo-dayoff .ch:nth-child(odd) { transform: translateY(-.08em) rotate(-5deg); }
+    .logo-dayoff .ch:nth-child(even) { transform: translateY(.06em) rotate(4deg); }
+    @keyframes ch-bounce { to { transform: translateY(-.24em) rotate(0deg); } }
+    .team-card:hover .logo-dayoff .ch, .team-card:focus-visible .logo-dayoff .ch { animation: ch-bounce .55s ease-in-out infinite alternate; animation-delay: calc(var(--i) * .07s); }
+    @media (prefers-reduced-motion: reduce) { .team-card:hover .logo-dayoff .ch, .team-card:focus-visible .logo-dayoff .ch { animation: none; } }
+    /* 흑야: 바탕체(명조) 계열 */
+    .logo-heiya { font-family: 'Noto Serif KR', 'Batang', 'BatangChe', 'Nanum Myeongjo', serif; font-weight: 700; font-size: 1.4em; letter-spacing: .14em; padding-left: .14em; text-shadow: 0 0 6px rgba(255,255,255,.45), 0 0 26px rgba(255,255,255,.2); }
+    /* 언더코어: 고딕체 계열 */
+    .logo-undercore { font-family: 'Black Han Sans', 'Noto Sans KR', 'Malgun Gothic', 'Apple SD Gothic Neo', Impact, sans-serif; text-transform: uppercase; font-size: .9em; letter-spacing: .02em; transform: skewX(-5deg); text-shadow: 2px 2px 0 rgba(0,0,0,.6); }
+    #tv-name { letter-spacing: 0; line-height: 1; }
+    #tv-name .logo { font-size: 30px; }
+
+    /* ---------- 특이사항 태그 / 능력 부연 / 주석 / 팀 소개 ---------- */
+    .ms-traits { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0 16px; }
+    .ms-trait { font-size: 12px; line-height: 1.5; padding: 3px 11px; border-radius: 999px; border: 1px solid rgba(143,156,255,.4); color: #c7cdf7; background: rgba(26,42,138,.35); }
+    .ms-sub { display: block; margin-top: 2px; font-size: 12px; line-height: 1.7; color: #94a3b8; }
+    .ms-fields dd strong { color: #fff; font-weight: 700; }
+    .ms-note { display: flex; gap: 12px; margin-top: 18px; padding: 14px 16px; border-radius: 10px; border: 1px solid rgba(214,178,110,.35); background: rgba(214,178,110,.07); }
+    .ms-note > i { flex: none; margin-top: 3px; color: var(--gold); }
+    .ms-note-term { display: block; color: var(--gold); font-weight: 600; letter-spacing: .1em; margin-bottom: 4px; }
+    .ms-note-text { font-size: 13px; line-height: 1.85; color: #e5e7eb; word-break: keep-all; }
+    #tv-intro { max-width: 900px; margin: 0 auto; padding: 44px 0 36px; border-bottom: 1px solid rgba(214,178,110,.25); }
+    #tv-intro:empty { display: none; }
+    .tv-groupdesc { margin-top: 8px; font-size: 12.5px; line-height: 1.8; color: #94a3b8; word-break: keep-all; }
+    .tv-tagline { margin: 16px 0 10px; font-family: var(--serif); font-style: italic; font-size: clamp(18px, 2.4vw, 24px); letter-spacing: .06em; line-height: 1.6; color: var(--gold); }
+    .tv-introtext { white-space: pre-line; font-size: 14px; line-height: 2; color: #cbd5e1; word-break: keep-all; }
+</style>
+</head>
+<body>
+
+    <!-- Page 1: Worldview Homepage -->
+    <div id="page-homepage" class="page-wrapper active">
+        <canvas id="snow-canvas" aria-hidden="true"></canvas>
+        <div class="v on" id="v1">
+            <section class="sec">
+                <div class="a dust"></div>
+                <div class="a blob b1"></div>
+                <div class="a blob b2"></div>
+                <div class="a blob b3"></div>
+                <div class="a ring r1"></div>
+                <div class="a ring r2"></div>
+                <div class="a ring r3"></div>
+                <div class="a ring r4"></div>
+                
+                <!-- Left Arch / City Info Symbol -->
+                <div class="a arch ar1" id="btn-open-archive" style="left: 14vw;" title="도시 정보 열람 (아카이브로 이동)">
+                    <div class="arch-content">
+                        <div class="ornate-icon" style="transform: scaleY(-1);">
+                            <svg viewBox="0 0 120 120" style="overflow: visible;">
+                                <g transform="translate(60, 60)">
+                                    <circle cx="0" cy="0" r="54" fill="none" stroke="rgba(214,178,110,0.35)" stroke-width="1" stroke-dasharray="3 3"/>
+                                    <circle cx="0" cy="0" r="46" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
+                                    <path d="M-50 0 L50 0 M0 -50 L0 50 M-35 -35 L35 35 M-35 35 L35 -35" stroke="rgba(255,255,255,0.35)" stroke-width="1"/>
+                                    <polygon points="0,-52 3,-38 14,-38 5,-30 8,-17 0,-24 -8,-17 -5,-30 -14,-38 -3,-38" fill="var(--gold)" filter="drop-shadow(0 0 4px var(--gold))"/>
+                                    <path d="M0 -56 L3 -22 L1.5 54 L-1.5 54 L-3 -22 Z" fill="#fff" filter="drop-shadow(0 0 8px rgba(255,255,255,0.9))"/>
+                                    <path d="M0 -56 L1 -22 L0 54 L-1 -22 Z" fill="var(--gold)"/>
+                                    <path d="M-20 -22 L20 -22 L0 -10 Z" fill="var(--gold)" filter="drop-shadow(0 0 4px var(--gold))"/>
+                                    <circle cx="0" cy="-16" r="3" fill="#fff"/>
+                                    <path d="M-32 0 C-32 -20 -18 -36 0 -36 C18 -36 32 -20 32 0 C32 20 18 36 0 36 C-18 36 -32 20 -32 0 Z" fill="none" stroke="var(--gold)" stroke-width="2.5" filter="drop-shadow(0 0 6px var(--gold))"/>
+                                    <path d="M-26 0 C-26 -15 -14 -28 0 -28 C14 -28 26 -15 26 0 C26 15 14 28 0 28 C-14 28 -26 15 -26 0 Z" fill="none" stroke="#fff" stroke-width="1.2"/>
+                                    <circle cx="0" cy="0" r="6.5" fill="var(--gold)" filter="drop-shadow(0 0 8px var(--gold))"/>
+                                    <circle cx="0" cy="0" r="3.5" fill="#fff"/>
+                                    <circle cx="-42" cy="-42" r="2" fill="var(--gold)"/><circle cx="42" cy="-42" r="2" fill="var(--gold)"/><circle cx="-42" cy="42" r="2" fill="var(--gold)"/><circle cx="42" cy="42" r="2" fill="var(--gold)"/>
+                                </g>
+                            </svg>
+                        </div>
+                        <span class="badge-label">도시 정보</span>
+                    </div>
+                </div>
+
+                <!-- Right Arch / Character Info Symbol -->
+                <div class="a arch ar2" id="btn-open-characters" style="right: 14vw;" title="캐릭터 정보 열람">
+                    <div class="arch-content">
+                        <div class="ornate-icon">
+                            <svg viewBox="0 0 120 120" style="overflow: visible;">
+                                <g transform="translate(60, 60)">
+                                    <circle cx="0" cy="0" r="54" fill="none" stroke="rgba(214,178,110,0.35)" stroke-width="1" stroke-dasharray="3 3"/>
+                                    <circle cx="0" cy="0" r="46" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
+                                    <path d="M-50 0 L50 0 M0 -50 L0 50 M-35 -35 L35 35 M-35 35 L35 -35" stroke="rgba(255,255,255,0.35)" stroke-width="1"/>
+                                    <polygon points="0,-52 3,-38 14,-38 5,-30 8,-17 0,-24 -8,-17 -5,-30 -14,-38 -3,-38" fill="var(--gold)" filter="drop-shadow(0 0 4px var(--gold))"/>
+                                    <path d="M0 -56 L3 -22 L1.5 54 L-1.5 54 L-3 -22 Z" fill="#fff" filter="drop-shadow(0 0 8px rgba(255,255,255,0.9))"/>
+                                    <path d="M0 -56 L1 -22 L0 54 L-1 -22 Z" fill="var(--gold)"/>
+                                    <path d="M-20 -22 L20 -22 L0 -10 Z" fill="var(--gold)" filter="drop-shadow(0 0 4px var(--gold))"/>
+                                    <circle cx="0" cy="-16" r="3" fill="#fff"/>
+                                    <path d="M-32 0 C-32 -20 -18 -36 0 -36 C18 -36 32 -20 32 0 C32 20 18 36 0 36 C-18 36 -32 20 -32 0 Z" fill="none" stroke="var(--gold)" stroke-width="2.5" filter="drop-shadow(0 0 6px var(--gold))"/>
+                                    <path d="M-26 0 C-26 -15 -14 -28 0 -28 C14 -28 26 -15 26 0 C26 15 14 28 0 28 C-14 28 -26 15 -26 0 Z" fill="none" stroke="#fff" stroke-width="1.2"/>
+                                    <circle cx="0" cy="0" r="6.5" fill="var(--gold)" filter="drop-shadow(0 0 8px var(--gold))"/>
+                                    <circle cx="0" cy="0" r="3.5" fill="#fff"/>
+                                    <circle cx="-42" cy="-42" r="2" fill="var(--gold)"/><circle cx="42" cy="-42" r="2" fill="var(--gold)"/><circle cx="-42" cy="42" r="2" fill="var(--gold)"/><circle cx="42" cy="42" r="2" fill="var(--gold)"/>
+                                </g>
+                            </svg>
+                        </div>
+                        <span class="badge-label">캐릭터 정보</span>
+                    </div>
+                </div>
+
+                <div class="a oval">
+                    <div class="phases">
+                        <i class="mn" style="--o:65%"></i>
+                        <i class="mn" style="--o:35%"></i>
+                        <i class="mn full"></i>
+                        <i class="mn" style="--o:-35%"></i>
+                        <i class="mn" style="--o:-65%"></i>
+                    </div>
+                </div>
+
+                <span class="a star" style="left:26vw;top:25vh">☆</span>
+                <span class="a star" style="right:24vw;top:22vh">✦</span>
+                <span class="a star" style="left:36vw;top:58vh">✧</span>
+                <span class="a star" style="right:30vw;top:62vh">☆</span>
+                <span class="a star" style="left:20vw;top:45vh;font-size:11px">✦</span>
+                <i class="a hang" style="left:44%;height:20vh"></i>
+                <i class="a hang" style="left:47%;height:14vh"></i>
+                <i class="a hang" style="left:52%;height:24vh"></i>
+                <i class="a hang" style="left:56%;height:12vh"></i>
+                <div class="a cap" style="left:3vw;top:4vh">Vol.03 · ECLIPSE ARCHIVE</div>
+                <div class="a cap" style="right:3vw;top:4vh">N 37°35′ · E 126°58′</div>
+                <div class="a cap" style="right:3vw;bottom:calc(6vh + 20px)">01 / 08</div>
+                
+                <div class="a ttl">
+                    <h1 style="font-weight: 200 !important; letter-spacing: 0.5em !important; font-size: clamp(30px, 3.8vw, 48px) !important;">青の契約者</h1>
+                    <span class="cap" style="font-size: 13px !important;">Chronicle of the Waning Moon</span>
+                </div>
+                <div class="a mobile-entry">
+                    <button type="button" id="m-open-archive">도시 정보</button>
+                    <button type="button" id="m-open-characters">캐릭터 정보</button>
+                </div>
+                <nav class="a">
+                    <a href="#section-world">World</a>
+                    <a href="#">Phases</a>
+                    <a href="#" id="nav-roster">Roster</a>
+                    <a href="#">Log</a>
+                    <a href="#">Guest</a>
+                </nav>
+            </section>
+
+            <!-- ✎ Guest ↔ World 사이 인용구: 아래 문장만 바꾸면 됩니다 -->
+            <section class="quote-band" aria-label="인용구">
+                <div class="qb-line qb-top" aria-hidden="true"></div>
+                <p class="qb-mark reveal" aria-hidden="true">✦</p>
+                <p class="qb-text reveal">달이 기우는 만큼,<br>누군가의 이름이 지워진다.</p>
+                <p class="qb-en cap reveal">As the moon wanes, a name is erased.</p>
+                <div class="qb-line qb-bottom" aria-hidden="true"></div>
+            </section>
+
+            <section class="sec s2a" id="section-world">
+                <div class="a dust"></div>
+                <div class="a ring r2" style="top:20vh;right:-8vw"></div>
+                <h2><em>World</em></h2>
+                
+                <div class="row">
+                    <a class="pa" style="height:48vh"><i class="mn" style="--o:60%"></i><b>I</b><span>THE CITY</span></a>
+                    <a class="pa" style="height:48vh"><i class="mn" style="--o:40%"></i><b>II</b><span>DUNGEON</span></a>
+                    <a class="pa" style="height:48vh"><i class="mn" style="--o:20%"></i><b>III</b><span>ESPER</span></a>
+                    <a class="pa" style="height:48vh"><i class="mn" style="--o:0%"></i><b>IV</b><span>STATUS</span></a>
+                    <a class="pa" style="height:48vh"><i class="mn" style="--o:-20%"></i><b>V</b><span>GUIDE</span></a>
+                    <a class="pa" style="height:48vh"><i class="mn" style="--o:-40%"></i><b>VI</b><span>DEMON</span></a>
+                    <a class="pa" style="height:48vh"><i class="mn" style="--o:-70%"></i><b>VII</b><span>TARTARUS</span></a>
+                </div>
+
+                <!-- Added Worldview Content Here -->
+                <!-- Worldview Content -->
+                <div class="worldview-content mx-auto px-6">
+                    <h3>도시</h3>
+                    <p>세계는 거대한 기업들이 지배하는 도시국가 체제로 재편되었다. 하나의 기업이 하나의 도시를 소유하고, 도시의 행정부터 산업·치안·의료·교통·정보까지 대부분의 기능을 담당한다. 인류는 기업이 제공하는 풍요와 편의를 누리는 대신, 기업이 만든 질서 안에서 살아간다.</p>
+                    <p>7개 기업은 자원과 정보를 완벽히 독점한 채 시민들의 삶 전반을 관리하며, 체제 규율을 위반한 자는 소리 소문 없이 사회에서 소거된다. 인구 과밀과 경쟁의 여파로 '인간이란 언제든 대체 가능한 소모품'이라는 인식이 상식으로 자리 잡았고, 이는 극심한 생명 경시 풍조와 타인을 향한 끊임없는 경계심을 낳는다. 기업의 결정에 따라 개인이 사회에서 흔적도 없이 사라지는 일 역시 존재하지만, 대부분의 시민은 이를 공개적으로 문제 삼지 않는다.</p>
+                    <p>이러한 기업의 통제는 일상 속 모든 행동을 일일이 억압하기보다는 비순응과 위반에 대한 자비 없는 제재라는 방식을 취한다. ‘머리’가 도시 전체를 감시하는 상황에서, 기업의 눈밖에 나는 것은 곧 개인의 완전한 매장을 의미한다.</p>
+                    
+                    <blockquote>체제: 7개 구역 연방제 │ 자본주의 │ 감시와 통제<br>경쟁사회 │ 인구 과밀집 │ 단발성 쾌락 추구</blockquote>
+
+                    <!-- Mindmap with Integrated Structure Details -->
+                    <div class="my-16 p-6 rounded-2xl bg-[#090d2e]/80 border border-[#d6b26e]/40 shadow-[0_0_30px_rgba(26,42,138,0.5)] backdrop-blur-md relative overflow-hidden mx-auto max-w-2xl">
+                        <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(143,156,255,0.05),transparent_70%)] pointer-events-none"></div>
+                        <div class="text-center mb-6">
+                            <span class="text-[10px] font-mono tracking-[0.35em] text-[#8f9cff] uppercase">HIERARCHICAL MONOLITH ARCHITECTURE</span>
+                            <h4 class="text-lg font-serif-gothic text-[#d6b26e] tracking-widest mt-1">도시 지배 구조도</h4>
+                        </div>
+
+                        <!-- Mindmap Container (Centered) -->
+                        <div class="flex flex-col items-center justify-center space-y-6 relative z-10 w-full">
+                            <!-- Root: Head -->
+                            <div class="group relative px-6 py-3 rounded-xl bg-gradient-to-r from-[#1a2a8a]/90 to-[#0a1250]/90 border border-[#d6b26e] shadow-[0_0_20px_rgba(214,178,110,0.3)] text-center cursor-pointer hover:scale-105 transition duration-300 mx-auto">
+                                <h5 class="text-base font-serif-gothic font-bold text-[#f3d99b] tracking-widest">머리</h5>
+                                <p class="text-xs text-gray-300 font-sans mt-1">유일한 국가 기관 · 절대 권력 · 세계 최심부 (기업에 명령 하달)</p>
+                            </div>
+
+                            <!-- Vertical Connector -->
+                            <div class="w-px h-8 bg-gradient-to-b from-[#d6b26e] to-[#8f9cff] mx-auto"></div>
+
+                            <!-- Level 2: 7 Enterprises -->
+                            <div class="w-full flex flex-col items-center justify-center">
+                                <div class="text-center mb-3">
+                                    <span class="text-[11px] font-serif-gothic text-[#8f9cff] tracking-widest">✦ 7개 기업 (NEST / 둥지) ✦</span>
+                                </div>
+                                <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2 justify-center w-full max-w-2xl mx-auto">
+                                    <div class="p-2.5 rounded-lg bg-[#0e133d]/90 border border-[#d6b26e]/50 text-center hover:border-[#d6b26e] hover:bg-[#151c52] transition duration-300">
+                                        <div class="text-[9px] font-mono text-[#d6b26e]">SECTOR 01</div>
+                                        <div class="text-xs font-serif-gothic font-bold text-white mt-0.5">아케론</div>
+                                        <div class="text-[9px] text-gray-400 mt-0.5">행정 · 계약자 관리</div>
+                                    </div>
+                                    <div class="p-2.5 rounded-lg bg-[#0e133d]/90 border border-[#8f9cff]/40 text-center hover:border-[#8f9cff] hover:bg-[#151c52] transition duration-300">
+                                        <div class="text-[9px] font-mono text-[#8f9cff]">SECTOR 02</div>
+                                        <div class="text-xs font-serif-gothic font-bold text-white mt-0.5">바레스</div>
+                                        <div class="text-[9px] text-gray-400 mt-0.5">민간군사 · 경호</div>
+                                    </div>
+                                    <div class="p-2.5 rounded-lg bg-[#0e133d]/90 border border-[#38bdf8]/40 text-center hover:border-[#38bdf8] hover:bg-[#151c52] transition duration-300">
+                                        <div class="text-[9px] font-mono text-[#38bdf8]">SECTOR 03</div>
+                                        <div class="text-xs font-serif-gothic font-bold text-white mt-0.5">칼리오페</div>
+                                        <div class="text-[9px] text-gray-400 mt-0.5">방송 · 엔터테인먼트</div>
+                                    </div>
+                                    <div class="p-2.5 rounded-lg bg-[#0e133d]/90 border border-[#ec4899]/40 text-center hover:border-[#ec4899] hover:bg-[#151c52] transition duration-300">
+                                        <div class="text-[9px] font-mono text-[#ec4899]">SECTOR 04</div>
+                                        <div class="text-xs font-serif-gothic font-bold text-white mt-0.5">디노시아</div>
+                                        <div class="text-[9px] text-gray-400 mt-0.5">관광 · 유흥 · 카지노</div>
+                                    </div>
+                                    <div class="p-2.5 rounded-lg bg-[#0e133d]/90 border border-[#10b981]/40 text-center hover:border-[#10b981] hover:bg-[#151c52] transition duration-300">
+                                        <div class="text-[9px] font-mono text-[#10b981]">SECTOR 05</div>
+                                        <div class="text-xs font-serif-gothic font-bold text-white mt-0.5">에리지</div>
+                                        <div class="text-[9px] text-gray-400 mt-0.5">의료 · 의체 · 장례</div>
+                                    </div>
+                                    <div class="p-2.5 rounded-lg bg-[#0e133d]/90 border border-[#a855f7]/40 text-center hover:border-[#a855f7] hover:bg-[#151c52] transition duration-300">
+                                        <div class="text-[9px] font-mono text-[#a855f7]">SECTOR 06</div>
+                                        <div class="text-xs font-serif-gothic font-bold text-white mt-0.5">페르메스</div>
+                                        <div class="text-[9px] text-gray-400 mt-0.5">운송 · 우편 · 워프</div>
+                                    </div>
+                                    <div class="p-2.5 rounded-lg bg-[#0e133d]/90 border border-[#3b82f6]/40 text-center hover:border-[#3b82f6] hover:bg-[#151c52] transition duration-300 col-span-2 sm:col-span-1">
+                                        <div class="text-[9px] font-mono text-[#3b82f6]">SECTOR 07</div>
+                                        <div class="text-xs font-serif-gothic font-bold text-white mt-0.5">노시스</div>
+                                        <div class="text-[9px] text-gray-400 mt-0.5">데이터 · 정보 통신</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Vertical Connector -->
+                            <div class="w-px h-8 bg-gradient-to-b from-[#8f9cff] to-[#d6b26e] mx-auto"></div>
+
+                            <!-- Level 3: Citizen Layers -->
+                            <div class="w-full max-w-2xl grid grid-cols-1 sm:grid-cols-3 gap-3 mx-auto justify-center">
+                                <div class="p-3 rounded-lg bg-[#060a22]/90 border border-[#d6b26e]/30 text-center">
+                                    <div class="text-xs font-serif-gothic text-[#d6b26e] font-bold">둥지 (NEST)</div>
+                                    <div class="text-[11px] text-gray-300 mt-1">기업 수뇌부 · 상류층 생활권 (펜트하우스·마천루)</div>
+                                </div>
+                                <div class="p-3 rounded-lg bg-[#060a22]/90 border border-[#8f9cff]/30 text-center">
+                                    <div class="text-xs font-serif-gothic text-[#8f9cff] font-bold">중층 (MID-LAYER)</div>
+                                    <div class="text-[11px] text-gray-300 mt-1">일반 시민·상업·주거 생활권 (아파트·오피스텔)</div>
+                                </div>
+                                <div class="p-3 rounded-lg bg-[#060a22]/90 border border-[#ec4899]/30 text-center">
+                                    <div class="text-xs font-serif-gothic text-[#ec4899] font-bold">하층 (UNDERGROUND)</div>
+                                    <div class="text-[11px] text-gray-300 mt-1">빈곤층·미등록자·범죄권 (고밀도 건축물·미로 골목)</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3>던전</h3>
+                    <p>재해이자 혁명의 원천. 내부에는 인간에게 적대적인 악마와 마물이 상시 출몰, 규모와 위험도에 따라 F급부터 SS급까지 분류된다. 던전은 도시를 위협하는 재해인 동시에 에너지와 각종 자원을 공급하는 핵심 자원으로 취급되기 때문에, 발생 즉시 위험도와 규모를 파악하고 관리하는 것이 중요하다.</p>
+                    <p>C급 이상의 던전이 발생할 경우 아케론 현장대응팀이 출동한다.</p>
+                    <ul>
+                        <li><strong class="px-2 py-0.5 rounded bg-[#1a2a8a]/60 text-[#d6b26e] border border-[#d6b26e]/40 mr-1.5 font-bold">코어</strong>던전 중심부에 존재하는 핵. 던전의 유지와 밀접하게 연결되어 있으며, 계약자가 코어에 도달해 자신의 무기를 인증하면 클리어 처리된다.</li>
+                        <li><strong class="px-2 py-0.5 rounded bg-[#1a2a8a]/60 text-[#d6b26e] border border-[#d6b26e]/40 mr-1.5 font-bold">소멸</strong> 코어 공략 후 던전을 완전히 없애는 방식. 던전은 사라지고 내부에서 일부 자원만 회수할 수 있다.</li>
+                        <li><strong class="px-2 py-0.5 rounded bg-[#1a2a8a]/60 text-[#d6b26e] border border-[#d6b26e]/40 mr-1.5 font-bold">귀속</strong> 코어에 계약자의 무기를 인증하여 던전을 현실에 남겨두는 방식. 귀속된 던전은 지속적으로 자원을 생산할 수 있어 기업의 중요한 산업시설이 된다.</li>
+                        <li><strong class="px-2 py-0.5 rounded bg-[#1a2a8a]/60 text-[#d6b26e] border border-[#d6b26e]/40 mr-1.5 font-bold">쟁탈</strong>다른 계약자가 귀속던전을 다시 공략하여 자신의 무기를 코어에 인증하는 것. 성공할 경우 기존 귀속권이 새로운 계약자에게 이전된다. 기업들은 주요 던전의 쟁탈을 막기 위해 전문 계약자와 용병을 고용한다.</li>
+                        <li><strong class="px-2 py-0.5 rounded bg-[#1a2a8a]/60 text-[#d6b26e] border border-[#d6b26e]/40 mr-1.5 font-bold">폭주</strong> 귀속던전이 장기간 방치되었을 때 발생하는 위험 상태. 내부의 악마와 마물이 증가하고 던전의 규모와 위험도가 상승하며, 심각한 경우 개체가 게이트를 넘어 현실로 유출된다.</li>
+                    </ul>
+
+                    <h3>계약자</h3>
+                    <p>스스로의 영혼을 주조해 특별한 능력을 사용하는 이들. 전체 인구 중 약 3%가 계약자로 각성하며, 각성 순간 각자에게 고유한 무기와 금기가 주어진다. 이 무기는 단순한 무장이 아니라 계약자의 영혼과 직접 연결된 계약의 매개체이며, 무기의 파괴는 곧 존재의 소멸이다. 반대로 무기만 멀쩡하다면, 계약자는 몇 번이고 살아날 수 있다.</p>
+                    <p>무기(영혼)와 영혼 간의 연결은 시간이 지남에 따라 흐려지기 때문에 계약자는 주기적으로 앵커 혹은 가이딩을 필요로 한다.</p>
+                    <ul>
+                        <li><strong class="px-2 py-0.5 rounded bg-[#1a2a8a]/60 text-[#d6b26e] border border-[#d6b26e]/40 mr-1.5 font-bold">붕괴</strong> 영혼과 육신의 연결이 약해지면서 발생하는 거부 반응. 이성을 잃고 능력 제어가 불가능하며, 균열을 노리는 악마에게 육체를 침탈당할 위험이 높아진다.</li>
+                        <li><strong class="px-2 py-0.5 rounded bg-[#1a2a8a]/60 text-[#d6b26e] border border-[#d6b26e]/40 mr-1.5 font-bold">금기</strong> 계약자가 반드시 지켜야 하는 개인적인 규칙. 위반 여부는 계약자의 확고한 의지를 기준으로 판단되며, 위반 시 계약자로서 지낸 시간, 무기와의 기억을 전부 망각한다. 기억의 공백은 그럴듯한 허구로 재구성 된다. (ex. 악마와 전투 중 부상당했다 → 뺑소니를 당했다)</li>
+                        <li><strong class="px-2 py-0.5 rounded bg-[#1a2a8a]/60 text-[#d6b26e] border border-[#d6b26e]/40 mr-1.5 font-bold">이레귤러</strong> 극히 희귀하게 발견되는 예외적 각성자. 영혼이 무기로 형상화되는 일반 계약자와 달리, 무기 자체가 고유한 영혼을 품고 있어 '정령 계약'의 형태로 능력을 얻는다.</li>
+                    </ul>
+
+                    <h3>등록</h3>
+                    <p>머리는 모든 것을 알고 있다. 만약 당신이 계약자로 각성한다면 1~2일 내로 기관에서 등록에 대한 서류를 보낼 것이다.</p>
+                    <ul>
+                        <li><strong class="px-2 py-0.5 rounded bg-[#1a2a8a]/60 text-[#d6b26e] border border-[#d6b26e]/40 mr-1.5 font-bold">등록</strong> 계약자의 무기를 공식적으로 등록하는 절차. 등록된 무기는 이관되어 기업에 보관하며 안전하게 보호된다. 아케론 기업팀에 소속되지 않은 이가 무기를 사용하는 것은 법적으로 금지되어 있기에, 대부분의 계약자들은 A사가 제공하는 ‘지하 무기고’에 방치한 채 본인의 삶을 살아간다.</li>
+                        <li><strong class="px-2 py-0.5 rounded bg-[#1a2a8a]/60 text-[#d6b26e] border border-[#d6b26e]/40 mr-1.5 font-bold">갱신</strong> 월 1회 진행되는 정기 절차. 무기 기록을 갱신하고 기억을 스캔하며 영혼을 정화해 계약자의 상태를 확인한다. 당연하게도 기업에 무기를 넘긴 이들은 이러한 절차가 필요 없다.</li>
+                        <li><strong class="px-2 py-0.5 rounded bg-[#1a2a8a]/60 text-[#d6b26e] border border-[#d6b26e]/40 mr-1.5 font-bold">미등록자</strong> 등록을 거부하거나 등록 절차를 이행하지 않은 계약자. 불법 계약자로 간주되어 체포와 엄벌의 대상이 된다. 흉악범의 경우, 무기의 몰수와 파괴까지 검토된다.</li>
+                    </ul>
+                    
+                    <div class="my-6 p-4 rounded-xl bg-[#0e133d]/70 border border-[#d6b26e]/50 flex items-start gap-4 shadow-md backdrop-blur-sm">
+                        <div class="text-[#d6b26e] text-lg pt-0.5 pl-1 shrink-0">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </div>
+                        <div class="text-xs sm:text-sm text-gray-300 leading-relaxed font-sans">
+                            즉, 본인의 무기를 24시간 소지하고 활용하고 싶다면 아케론에 소속되어 현장팀으로 구르는 수밖에 없다.
+                        </div>
+                    </div>
+
+                    <h3>가이드</h3>
+                    <p>가이드는 계약자와 대칭을 이루는 존재로, 타인의 영혼에 간섭하여 영혼과 육체 사이의 결속을 정돈하고 안정화하는 능력을 갖췄다. 영혼의 직접적인 공명은 사람과 사람이 만나고, 서로를 알아가며 가까워지는 과정을 단번에 생략한 채 ‘이해’ 단계로 접어든다. 내가 당신이 되고. 당신이 네가 되는 것처럼. 서로의 깊은 흉터와 결핍을 단숨에 들추어내기에 지극히 기형적이면서도, 결코 거부할 수 없는 유대를 완성시킨다.</p>
+                    <p>계약자처럼 눈으로 판별하는 게 어렵다. 공통적인 특징이라면 '어릴 때부터 이상 현상과 악마에 자주 노출되었다'는 것. 가이드이기에 그런 일을 겪는 건지, 그런일을 겪었기에 가이드가 되는 건지 알 수 없다.</p>
+                    <ul>
+                        <li><strong class="px-2 py-0.5 rounded bg-[#1a2a8a]/60 text-[#d6b26e] border border-[#d6b26e]/40 mr-1.5 font-bold">각성?</strong> 가이드는 어느 순간부터 타인의 영혼을 희미한 빛의 형태로 어렴풋이 인지할 수 있게 된다. 그리고 그 능력이 생긴 시점으로부터 2~3일 내 아케론에서 스카웃 제의가 온다. 도시 내에서 가이드는 대체 불가 자원이기에 아낌없는 자본 투자로 독점하려 든다. 물론, 고등급 한정으로.</li>
+                        <li><strong class="px-2 py-0.5 rounded bg-[#1a2a8a]/60 text-[#d6b26e] border border-[#d6b26e]/40 mr-1.5 font-bold">공명</strong> 계약자의 무기(영혼)-육체 간 결속을 갱신하고 능력 효율을 폭발적으로 상승시키는 행위. 신체 접촉 면적이 넓어질수록 공명률이 직관적으로 상승한다.</li>
+                        <li><strong class="px-2 py-0.5 rounded bg-[#1a2a8a]/60 text-[#d6b26e] border border-[#d6b26e]/40 mr-1.5 font-bold">등급 분류</strong> F급부터 S급까지 부여되는 가이드의 역량 수치. 다수의 계약자를 높은 안정성으로 감당할 수 있을수록 고등급으로 분류된다. 낮은 등급이라 해서 단일 대상에 대한 안정화 효율이 떨어진다는 뜻은 아니다.</li>
+                        <li><strong class="px-2 py-0.5 rounded bg-[#1a2a8a]/60 text-[#d6b26e] border border-[#d6b26e]/40 mr-1.5 font-bold">각인</strong> 가이드와 계약자가 파트너로서 서로를 얽매는 또 다른 계약. 두 사람의 확고한 의지와 함께 서로의 피를 삼키는 키스를 통해 완성되며, 손등에 고유한 문양이 새겨진다. 제3자와 공명할 경우 본능적 거부감(역겨움·고통)이 동반. 상대에게는 안정적인 가이딩을 제공할 수 있다.</li>
+                    </ul>
+                    
+                    <div class="my-6 p-4 rounded-xl bg-[#0e133d]/70 border border-[#d6b26e]/50 flex items-start gap-4 shadow-md backdrop-blur-sm">
+                        <div class="text-[#d6b26e] text-lg pt-0.5 pl-1 shrink-0">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </div>
+                        <div class="text-xs sm:text-sm text-gray-300 leading-relaxed font-sans">
+                            궁합이 더럽게 안 맞는 이들도 각인을 맺으면 높은 공명률을 가질 수 있는 것.
+                        </div>
+                    </div>
+
+                    <div class="my-6 p-4 rounded-xl bg-[#0e133d]/70 border border-[#d6b26e]/50 flex items-start gap-4 shadow-md backdrop-blur-sm">
+                        <div class="text-[#d6b26e] text-lg pt-0.5 pl-1 shrink-0">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </div>
+                        <div class="text-xs sm:text-sm text-gray-300 leading-relaxed font-sans">
+                            당연하게도, 기업은 각인을 권장하지 않는다. 희귀 자원인 가이드가 한 명에게만 귀속되는 것은 낭비 그 자체.
+                        </div>
+                    </div>
+
+                    <h3>악마</h3>
+                    <p>악마는 다른 차원에서 유입된 적대 존재로, 도시 내에서는 괴물이나 마수 등 다양한 이름으로 불린다. 계약자와 유사한 초자연적 권능을 사용하기에 일반적인 인간의 무력으로는 대치가 불가능하며, 오직 계약자만이 안전하게 이들을 소탕할 수 있다. 본래 태양빛 아래에서는 활동할 수 없어 일몰 후에야 던전 밖으로 기어 나오지만, 인간의 육체를 침탈한 순간부터는 낮밤의 제약 없이 지상 활동이 가능해진다.</p>
+                    <ul>
+                        <li><strong class="px-2 py-0.5 rounded bg-[#1a2a8a]/60 text-[#d6b26e] border border-[#d6b26e]/40 mr-1.5 font-bold">침탈</strong> 영혼이 비어 있거나 붕괴 상태에 빠진 육체를 강탈하는 악마 특유의 생태. 침탈에 성공한 악마는 낮에도 제약 없이 활동할 수 있게 되며, 인간의 형태와 사회적 신분을 유지한 채 도시 시스템 내부로 잠입한다.</li>
+                        <li><strong class="px-2 py-0.5 rounded bg-[#1a2a8a]/60 text-[#d6b26e] border border-[#d6b26e]/40 mr-1.5 font-bold">유인</strong> 육체를 빼앗은 악마가 벌이는 기형적인 확장 방식. 침탈한 인물의 인간관계와 주변인들을 안심시킨 뒤 던전 깊은 곳으로 유인해 끌어들인다. 이를 통해 동료 악마들에게 새로운 육체를 제공하거나 추가적인 침탈의 제물로 바친다.</li>
+                        <li><strong class="px-2 py-0.5 rounded bg-[#1a2a8a]/60 text-[#d6b26e] border border-[#d6b26e]/40 mr-1.5 font-bold">스펙트럼</strong> 단순한 본능과 파괴욕으로만 움직이는 야수형 악마부터, 인간 수준 이상의 사고와 고등 사회 활동이 가능한 개체까지 다양하게 존재한다. 특히 고지능 악마는 인간의 언행과 정서를 완벽히 모방하며, 정교한 계략과 교섭을 통해 사회 뒤편에 침투한다.</li>
+                    </ul>
+                    
+                    <div class="my-6 p-4 rounded-xl bg-[#0e133d]/70 border border-[#d6b26e]/50 flex items-start gap-4 shadow-md backdrop-blur-sm">
+                        <div class="text-[#d6b26e] text-lg pt-0.5 pl-1 shrink-0">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </div>
+                        <div class="text-xs sm:text-sm text-gray-300 leading-relaxed font-sans">
+                            도시 시민들은 당장 내일, 가장 가까운 이가 악마로 변할지도 모른다는 불안감에 시달린다.
+                        </div>
+                    </div>
+
+                    <div class="prologue">
+                        <span class="cap prologue-cap reveal">Prologue</span>
+                        <h3 class="prologue-title reveal">그리고, 타르타로스.</h3>
+
+                        <p class="pl-group">
+                            <span class="reveal">7년 전, 한 해안 마을에서 지금까지 발견된 것 중 가장 거대한 던전이 발생했다.</span>
+                            <span class="reveal">끝을 모르고 솟아오른 탑.</span>
+                            <span class="reveal">사람들은 그것을 타르타로스라고 불렀다.</span>
+                            <span class="reveal">그리고 타르타로스에 들어간 사람은 아무도 돌아오지 못했다.</span>
+                            <span class="reveal">7년이 지난 현재까지도 타르타로스는 공략되지 않았다. 오늘날에는 신기루처럼 사라진 서른 명과 마을 하나를 모르는 척하며, 불길한 것으로 쉬쉬하고 넘어가는 것이 일반적이다. 그 기업들조차 타르타로스는 예외로 두었다.</span>
+                        </p>
+
+                        <p class="pl-group">
+                            <span class="reveal">하지만 그렇게 쌓아올린 평화는 오래 가지 못하는 법.</span>
+                            <span class="reveal">최근의 타르타로스는 역류하듯 악마를 뱉어내고 있다.</span>
+                            <span class="reveal">‘머리’는 이를 재해로 인지, 하나의 명령을 내린다.</span>
+                            <span class="reveal">──어떤 수를 써서든 타르타로스를 클리어하라고.</span>
+                        </p>
+
+                        <p class="prologue-note reveal">아케론은 1월 1일에 최정예로 구성된 공략팀을 보낼 예정이다.</p>
+
+                        <div class="prologue-facts reveal">
+                            <strong>특징</strong>
+                            <span>유일한 SS급 던전</span>
+                            <span>G구 해안 마을 ‘아틀라스’에 위치</span>
+                            <span>1개의 층 = 1개의 던전</span>
+                        </div>
+                    </div>
+
+                    <div class="divider reveal" role="separator"><span>✦ ✧ ✦</span></div>
+                </div>
+
+                <div class="info">
+                    <div>도시를 움직이는 것은 법도, 국가도 아닌 기업과 계약이다.<br><span class="cap">— 01 · 서문</span></div>
+                    <div>수많은 던전이 생겨났고, 수많은 계약자가 그 안으로 사라졌다.<br><span class="cap">— 02 · 서문</span></div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+
+    <!-- Page 2: Abyssal Archive -->
+    <div id="page-archive" class="page-wrapper flex flex-col justify-between">
+        
+        <header class="fixed top-0 left-0 w-full h-14 z-20 bg-[#070a24]/85 backdrop-blur-md border-b border-[#d6b26e]/30 px-6 flex items-center justify-between pointer-events-auto shadow-[0_4px_20px_rgba(5,5,15,0.7)]">
+            <div class="flex items-center space-x-4">
+                <button id="btn-back-home" class="group flex items-center justify-center w-8 h-8 rounded border border-[#8f9cff]/40 bg-[#10153d] text-[#8f9cff] hover:bg-[#8f9cff]/20 hover:border-[#8f9cff] transition" title="홈 화면으로 돌아가기">
+                    <i class="fa-solid fa-arrow-left group-hover:-translate-x-1 transition-transform"></i>
+                </button>
+                <div class="h-6 w-px bg-[#d6b26e]/30"></div>
+                <div class="w-8 h-8 rounded-full border border-[#d6b26e] flex items-center justify-center bg-[#10153d] text-[#d6b26e]">
+                    <i class="fa-solid fa-gem text-xs"></i>
+                </div>
+                <div>
+                    <h1 class="text-sm font-serif-gothic font-bold tracking-widest text-[#d6b26e]">青の契約者 · THE CITY ARCHIVE</h1>
+                    <p class="text-[9px] text-gray-400 font-mono tracking-wider">SECTOR & MONOLITH ARCHITECTURAL SYSTEM v5.0</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-4 text-xs font-mono text-gray-300">
+                <span class="hidden sm:inline-block px-3 py-1 rounded bg-[#10153d]/85 border border-[#8f9cff]/30 text-[#8f9cff]">
+                    <i class="fa-solid fa-shield-halved mr-1"></i> 7 SECTORS ACTIVE
+                </span>
+            </div>
+        </header>
+
+        <main class="relative w-full h-full flex-grow cursor-grab active:cursor-grabbing overflow-hidden">
+            <canvas id="archive-snow-canvas" class="absolute inset-0 w-full h-full pointer-events-none z-10"></canvas>
+            <canvas id="cityCanvas" class="w-full h-full block"></canvas>
+            
+            <div id="floating-badge" class="absolute top-0 left-0 hidden pointer-events-none z-30 transition-transform duration-75">
+                <div class="relative -translate-x-1/2 -translate-y-full mb-3 px-4 py-2 gothic-glass bg-[#090d2e]/90 border border-[#d6b26e] rounded-lg shadow-[0_0_25px_rgba(143,156,255,0.4)] text-center">
+                    <div id="badge-code" class="text-[10px] tracking-[0.25em] text-[#8f9cff] font-mono">SECTOR 01</div>
+                    <div id="badge-name" class="text-base font-serif-gothic font-semibold text-[#d6b26e] whitespace-nowrap">Acheron</div>
+                    <div id="badge-sub" class="text-[11px] text-gray-300 font-sans">아케론</div>
+                    <div class="absolute left-1/2 -bottom-3 w-px h-3 border-l border-dashed border-[#d6b26e] -translate-x-1/2"></div>
+                    <div class="absolute left-1/2 -bottom-4 w-1.5 h-1.5 bg-[#d6b26e] rounded-full -translate-x-1/2 shadow-[0_0_8px_#d6b26e]"></div>
+                </div>
+            </div>
+        </main>
+
+        <nav id="sector-dock" aria-label="구역 바로가기"></nav>
+
+        <aside id="sector-sidebar" class="fixed top-0 right-0 h-full w-full sm:w-[420px] z-40 translate-x-full transition-transform duration-300 ease-in-out pointer-events-auto">
+            <div class="h-full w-full bg-[#070a24]/95 border-l-2 border-[#d6b26e] shadow-[0_0_50px_rgba(26,42,138,0.7)] backdrop-blur-xl p-6 pt-20 flex flex-col justify-between overflow-y-auto">
+                <div>
+                    <div class="flex items-center justify-between pb-4 border-b border-[#d6b26e]/30">
+                        <div class="flex items-center space-x-3">
+                            <span id="sidebar-icon" class="text-2xl text-[#d6b26e]"><i class="fa-solid fa-gem"></i></span>
+                            <div>
+                                <span id="sidebar-sector-id" class="text-xs font-mono tracking-[0.25em] text-[#8f9cff]">SECTOR 01</span>
+                                <h2 id="sidebar-sector-title" class="text-2xl font-serif-gothic text-[#d6b26e] font-bold">Acheron</h2>
+                            </div>
+                        </div>
+                        <button onclick="closeSidebar()" class="w-8 h-8 rounded-full border border-[#d6b26e]/40 flex items-center justify-center text-[#d6b26e] hover:bg-[#d6b26e]/20 transition">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+
+                    <div class="mt-4 relative w-full h-44 rounded-lg overflow-hidden border border-[#d6b26e]/50 bg-[#04061a] flex items-center justify-center group shadow-[0_0_20px_rgba(26,42,138,0.3)]">
+                        <img id="sidebar-sector-img" src="https://imgur.com/CANgIT8.png" alt="Sector Visual" class="w-full h-full object-cover opacity-85 group-hover:opacity-100 transition duration-300" onerror="this.onerror=null; this.src='https://placehold.co/400x200/080c24/d6b26e?text=ARCHIVE+VISUAL'">
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#070a24] via-transparent to-transparent opacity-60 pointer-events-none"></div>
+                    </div>
+
+                    <div class="mt-4 p-4 rounded-lg bg-[#0d123d]/70 border border-[#8f9cff]/30 text-xs text-gray-200 leading-relaxed font-sans space-y-2">
+                        <div id="sidebar-content-body" class="space-y-2"></div>
+                    </div>
+
+                    <div class="mt-6">
+                        <div class="block text-xs font-serif-gothic text-[#d6b26e] tracking-widest uppercase mb-2">
+                            <i class="fa-solid fa-link mr-1"></i> RELATED / 연관 세력 · 캐릭터
+                        </div>
+                        <div id="sector-related" class="space-y-3"></div>
+                    </div>
+                </div>
+
+                <div class="pt-4 mt-6 border-t border-[#d6b26e]/20 text-[11px] text-center text-gray-500 font-mono">
+                    ECLIPSE DEEP BLUE · GOTHIC ARCHIVE v5.0
+                </div>
+            </div>
+        </aside>
+
+        <div id="sidebar-backdrop" onclick="closeSidebar()" class="fixed inset-0 bg-black/50 z-30 opacity-0 pointer-events-none transition-opacity duration-300"></div>
+    </div>
+
+    <!-- Page 3: Character Files -->
+    <div id="page-characters" class="page-wrapper">
+        <canvas id="char-snow-canvas" aria-hidden="true"></canvas>
+
+        <header class="fixed top-0 left-0 w-full h-14 z-20 bg-[#070a24]/85 backdrop-blur-md border-b border-[#d6b26e]/30 px-6 flex items-center justify-between shadow-[0_4px_20px_rgba(5,5,15,0.7)]">
+            <div class="flex items-center space-x-4">
+                <button id="btn-char-back-home" type="button" class="group flex items-center justify-center w-8 h-8 rounded border border-[#8f9cff]/40 bg-[#10153d] text-[#8f9cff] hover:bg-[#8f9cff]/20 hover:border-[#8f9cff] transition" title="홈 화면으로 돌아가기" aria-label="홈 화면으로 돌아가기">
+                    <i class="fa-solid fa-arrow-left group-hover:-translate-x-1 transition-transform"></i>
+                </button>
+                <div class="h-6 w-px bg-[#d6b26e]/30"></div>
+                <div>
+                    <p class="text-sm font-serif-gothic font-bold tracking-widest text-[#d6b26e]">青の契約者 · CHARACTER FILES</p>
+                    <p class="text-[9px] text-gray-400 font-mono tracking-wider">CONTRACTOR & GUIDE REGISTRY</p>
+                </div>
+            </div>
+            <span class="hidden sm:inline-block px-3 py-1 rounded bg-[#10153d]/85 border border-[#8f9cff]/30 text-[#8f9cff] text-xs font-mono">
+                <i class="fa-solid fa-address-book mr-1"></i> <span id="char-count">0</span> FILES
+            </span>
+        </header>
+
+        <main class="relative max-w-6xl mx-auto px-5 pt-28 pb-24">
+            <div class="text-center mb-10">
+                <span class="cap">Dossier · 01</span>
+                <h1 style="font-family: var(--kr); font-weight: 200; font-size: clamp(32px, 6vw, 64px); letter-spacing: .3em; padding-left: .3em; margin-top: 10px;">캐릭터 정보</h1>
+                <p class="cap" style="margin-top: 10px; letter-spacing: .5em;">Contractors &amp; Guides</p>
+            </div>
+
+            <div class="flex flex-wrap justify-center gap-2 mb-10" role="group" aria-label="캐릭터 분류">
+                <button type="button" class="char-filter" data-tab="teams" aria-pressed="true">팀 · TEAMS</button>
+                <button type="button" class="char-filter" data-tab="solo" aria-pressed="false">개인 · INDIVIDUAL</button>
+            </div>
+
+            <div id="char-grid" class="char-grid mode-teams"></div>
+            <p id="char-empty" class="hidden text-center text-gray-400 text-sm py-16">해당 분류의 기록이 아직 없습니다.</p>
+        </main>
+
+        <!-- 개인 캐릭터 상세 -->
+        <div id="char-detail" role="dialog" aria-modal="true" aria-label="캐릭터 상세">
+            <div id="char-detail-backdrop"></div>
+            <div class="cd-panel gothic-glass gothic-border">
+                <button id="cd-close" type="button" aria-label="닫기"><i class="fa-solid fa-xmark"></i></button>
+                <div id="cd-body"></div>
+            </div>
+        </div>
+
+        <!-- 팀 상세: 팀원 정보가 세로로 이어짐 -->
+        <div id="team-view" role="dialog" aria-modal="true" aria-label="팀 상세">
+            <div class="tv-head">
+                <button id="tv-back" type="button"><i class="fa-solid fa-arrow-left mr-1"></i> 팀 목록</button>
+                <div>
+                    <span id="tv-unit" class="cap"></span>
+                    <h2 id="tv-name"></h2>
+                </div>
+                <nav id="tv-nav" aria-label="팀원 바로가기"></nav>
+            </div>
+            <div id="tv-scroll">
+                <div id="tv-intro"></div>
+                <div id="tv-members"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // localStorage 안전 래퍼: 차단/사생활 보호 모드에서도 예외 없이 동작하고,
+        // 저장 불가 시 현재 세션 동안은 메모리에 보관
+        const memoryStore = {};
+        const safeStorage = {
+            get(key) {
+                try {
+                    const v = window.localStorage.getItem(key);
+                    if (v !== null) return v;
+                } catch (e) { /* 접근 불가 → 메모리 fallback */ }
+                return Object.prototype.hasOwnProperty.call(memoryStore, key) ? memoryStore[key] : null;
+            },
+            set(key, value) {
+                memoryStore[key] = value;
+                try {
+                    window.localStorage.setItem(key, value);
+                    return true;
+                } catch (e) {
+                    return false; // 용량 초과, 차단 등
+                }
+            }
+        };
+
+        const pageHomepage = document.getElementById('page-homepage');
+        const pageArchive = document.getElementById('page-archive');
+        const pageCharacters = document.getElementById('page-characters');
+        
+        const pages = { home: pageHomepage, archive: pageArchive, characters: pageCharacters };
+        let currentPage = 'home';
+
+        function showPage(name) {
+            if (name === currentPage) return;
+            Object.entries(pages).forEach(([key, el]) => el.classList.toggle('active', key === name));
+            currentPage = name;
+            closeSidebar();
+            closeCharacterDetail();
+            closeTeamView();
+            if (name === 'archive') {
+                resizeCityCanvas();
+                setTimeout(resizeCityCanvas, 100);
+            }
+            if (name === 'characters') pageCharacters.scrollTop = 0;
+        }
+
+        const goArchive = () => showPage('archive');
+        const goCharacters = () => showPage('characters');
+        const goHome = () => showPage('home');
+
+        document.getElementById('btn-open-archive').addEventListener('click', goArchive);
+        document.getElementById('btn-open-characters').addEventListener('click', goCharacters);
+        document.getElementById('m-open-archive').addEventListener('click', goArchive);
+        document.getElementById('m-open-characters').addEventListener('click', goCharacters);
+        document.getElementById('nav-roster').addEventListener('click', goCharacters);
+        document.getElementById('btn-back-home').addEventListener('click', goHome);
+        document.getElementById('btn-char-back-home').addEventListener('click', goHome);
+
+        // 아치(div)를 키보드로도 조작 가능하게
+        document.querySelectorAll('.arch').forEach(el => {
+            el.setAttribute('role', 'button');
+            el.tabIndex = 0;
+            el.setAttribute('aria-label', (el.querySelector('.badge-label')?.textContent || '').trim());
+            el.addEventListener('keydown', e => {
+                if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); el.click(); }
+            });
+        });
+        
+        document.querySelectorAll('a[href="#"]:not([href="#section-world"]), .pa').forEach(a => a.addEventListener('click', e => e.preventDefault()));
+        
+        document.querySelector('a[href="#section-world"]').addEventListener('click', (e) => {
+            e.preventDefault();
+            document.getElementById('section-world').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        // 눈 효과: 캔버스 하나당 인스턴스 하나, 루프는 하나만 사용
+        function createSnow(canvas, isActive) {
+            const ctx = canvas.getContext('2d');
+            let w = 0, h = 0, particles = [], drawn = false;
+
+            const spawn = () => ({
+                x: Math.random() * w, y: Math.random() * h,
+                r: Math.random() * 1.5 + 0.5,
+                speedY: Math.random() * 0.4 + 0.2,
+                speedX: (Math.random() - 0.5) * 0.3,
+                opacity: Math.random() * 0.7 + 0.3,
+                pulse: Math.random() * Math.PI * 2,
+                pulseSpeed: Math.random() * 0.02 + 0.01
+            });
+
+            function resize() {
+                const dpr = Math.min(window.devicePixelRatio || 1, 2);
+                w = window.innerWidth; h = window.innerHeight;
+                canvas.width = Math.round(w * dpr);
+                canvas.height = Math.round(h * dpr);
+                ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+                const target = Math.floor((w * h) / 9000);
+                while (particles.length < target) particles.push(spawn());
+                particles.length = Math.min(particles.length, target);
+                particles.forEach(p => { if (p.x > w) p.x = Math.random() * w; if (p.y > h) p.y = Math.random() * h; });
+            }
+
+            function frame(dt) {
+                if (!isActive()) {
+                    if (drawn) { ctx.clearRect(0, 0, w, h); drawn = false; }
+                    return;
+                }
+                ctx.clearRect(0, 0, w, h);
+                drawn = true;
+                for (const p of particles) {
+                    p.y += p.speedY * dt;
+                    p.x += (p.speedX + Math.sin(p.pulse) * 0.15) * dt;
+                    p.pulse += p.pulseSpeed * dt;
+                    if (p.y > h) { p.y = -5; p.x = Math.random() * w; }
+                    if (p.x > w) p.x = 0;
+                    if (p.x < 0) p.x = w;
+                    ctx.fillStyle = `rgba(255, 255, 255, ${p.opacity * (0.6 + 0.4 * Math.sin(p.pulse))})`;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+
+            resize();
+            return { resize, frame };
+        }
+
+        const snows = [
+            createSnow(document.getElementById('snow-canvas'), () => pageHomepage.classList.contains('active')),
+            createSnow(document.getElementById('archive-snow-canvas'), () => pageArchive.classList.contains('active')),
+            createSnow(document.getElementById('char-snow-canvas'), () => pageCharacters.classList.contains('active'))
+        ];
+
+        let snowLast = 0;
+        function snowLoop(t) {
+            const dt = snowLast ? Math.min((t - snowLast) / 16.667, 3) : 1; // 60fps 기준 보정 (고주사율 모니터 대응)
+            snowLast = t;
+            snows.forEach(s => s.frame(dt));
+            requestAnimationFrame(snowLoop);
+        }
+
+        const cityCanvas = document.getElementById('cityCanvas');
+        const cityCtx = cityCanvas.getContext('2d');
+
+        let camera = { x: 0, y: 0 };
+        let isDragging = false;
+        let dragStart = { x: 0, y: 0 };
+        let selectedDistrictId = null;
+        let hoveredDistrictId = null;
+
+        const districtLift = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0 };
+        const districtTargetLift = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0 };
+
+        const DISTRICTS = {
+            1: {
+                id: 1, code: "SECTOR 01", name: "Acheron", sub: "아케론",
+                iconHtml: '<i class="fa-solid fa-gem text-lg"></i>',
+                color: "#d6b26e", accentColor: "#f3d99b", tileBase: "#121738", tileHover: "#1f275e", wallDark: "#090c24", wallLight: "#131a47", roofColor: "#1d2766", windowColor: "#d6b26e",
+                tiles: [], buildings: [], center: { gx: 9, gy: 9.5 },
+                imgUrl: "https://imgur.com/CANgIT8.png",
+                lines: ["- 아케론", "- 행정·계약자관리·던전관리·법정 / 계약자 특수팀 운영 / 계약자 관련 연구 전담", "- 유일한 머리 직속 기업 / 탐정사무소 즐비 / 사소 다툼도 신고문화 / 재판=컨텐츠 / 독서 문화 발달", "- 주요 장소: 아케론 중앙본부·아케론 연구소·시청·도서관·대법정·탐정사무소", "- 귀속 던전: 없음"]
+            },
+            2: {
+                id: 2, code: "SECTOR 02", name: "Bares", sub: "바레스",
+                iconHtml: '<i class="fa-solid fa-moon text-lg"></i>',
+                color: "#8f9cff", accentColor: "#b8c2ff", tileBase: "#10153d", tileHover: "#1b2359", wallDark: "#080b26", wallLight: "#12194a", roofColor: "#192263", windowColor: "#8f9cff",
+                tiles: [], buildings: [], center: { gx: 13.5, gy: 5.5 },
+                imgUrl: "https://imgur.com/aK8SAY1.png",
+                lines: ["- 바레스", "- 민간군사·경호·무장보안·용병 관련 기술 / 불철주야 군수 공장 / 지하 교도소", "- 도시 全산업폐기물 담당·투하/빈부격차 극심 / 삼엄·정적 분위기 / 총기 관련 규제 / 빈번한 악마출현", "- 주요 장소: 바레스 본사·신작시연 아레나·사관학교·전술타워·공업구역", "- 귀속 던전: 베헤모스 심장"]
+            },
+            3: {
+                id: 3, code: "SECTOR 03", name: "Calliope", sub: "칼리오페",
+                iconHtml: '<i class="fa-solid fa-microphone-lines text-lg"></i>',
+                color: "#38bdf8", accentColor: "#7dd3fc", tileBase: "#0c1b33", tileHover: "#152e52", wallDark: "#061021", wallLight: "#0f2240", roofColor: "#13315c", windowColor: "#38bdf8",
+                tiles: [], buildings: [], center: { gx: 4.5, gy: 5.5 },
+                imgUrl: "https://imgur.com/2Q4HIEt.png",
+                lines: ["- 칼리오페", "- 방송·엔터·스포츠 기술 / 미디어시티", "- 화려한 전광판·홀로그램 / 길거리 인터뷰·촬영多 / 하층사람도 재능만 있다면 캐스팅", "- 주요 장소: 칼리오페 본사·라디오타워·방송국·엔터거리·블루 레코드·대극장·예체능고교", "- 귀속 던전: 벨벳룸"]
+            },
+            4: {
+                id: 4, code: "SECTOR 04", name: "Dinosia", sub: "디노시아",
+                iconHtml: '<i class="fa-solid fa-dice text-lg"></i>',
+                color: "#ec4899", accentColor: "#f472b6", tileBase: "#2b0d1e", tileHover: "#471532", wallDark: "#1a0611", wallLight: "#330f24", roofColor: "#4d1736", windowColor: "#ec4899",
+                tiles: [], buildings: [], center: { gx: 4.5, gy: 10.5 },
+                imgUrl: "https://imgur.com/MLEqHpK.png",
+                lines: ["- 디노시아", "- 관광·유흥·카지노 / 환락과 광기의 도시", "- 야시장·호텔·파티 발달 / 도시 최대 규모 카지노 / 도박 사채업·흥신소 / 부랑자多 / 쓰레기 같은 치안", "- 독점 상품 [퀸즈 블러드]", "- 주요 장소: 디노시아 본사·호텔·테마파크·워터파크·카지노·클럽·광장", "- 陰: 사창가·해결사무소·스트립클럽", "- 귀속 던전: 래빗홀"]
+            },
+            5: {
+                id: 5, code: "SECTOR 05", name: "Erige", sub: "에리지",
+                iconHtml: '<i class="fa-solid fa-notes-medical text-lg"></i>',
+                color: "#10b981", accentColor: "#34d399", tileBase: "#0d2b20", tileHover: "#154735", wallDark: "#061a13", wallLight: "#0f3325", roofColor: "#164d37", windowColor: "#10b981",
+                tiles: [], buildings: [], center: { gx: 7, gy: 15 },
+                imgUrl: "https://imgur.com/AlIis9E.png",
+                lines: ["- 에리지", "- 의료·의체·장례·보험 기술 / 연구자들의 도시", "- 의료드론 / 검은호수에 종이배를 띄우는 추모 문화 / 의체 착용은 흔한 일", "- 주요 장소: 에리지 본사·납골당·검은호수·추모공원·의료센터", "- 陰: 불법의체시술·마약·장기매매·폐병원", "- 귀속 던전: 메멘토모리"]
+            },
+            6: {
+                id: 6, code: "SECTOR 06", name: "Fermes", sub: "페르메스",
+                iconHtml: '<i class="fa-solid fa-train text-lg"></i>',
+                color: "#a855f7", accentColor: "#c084fc", tileBase: "#220d2b", tileHover: "#391647", wallDark: "#14061a", wallLight: "#290f33", roofColor: "#3d174d", windowColor: "#a855f7",
+                tiles: [], buildings: [], center: { gx: 13.5, gy: 13 },
+                imgUrl: "https://imgur.com/nQyYkGB.png",
+                lines: ["- 페르메스", "- 운송·우편·순간이동 기술", "- 고가 열차 / 비행선·크래프트 / 둥지 시민에게만 제공하는 워프 스페이스", "- 주요 장소: 페르메스 본사·우체국·허브", "- 귀속 던전: 하층·무스펠터널"]
+            },
+            7: {
+                id: 7, code: "SECTOR 07", name: "Gnosis", sub: "노시스",
+                iconHtml: '<i class="fa-solid fa-tower-broadcast text-lg"></i>',
+                color: "#3b82f6", accentColor: "#60a5fa", tileBase: "#0d1b33", tileHover: "#152e59", wallDark: "#060f1f", wallLight: "#0f2242", roofColor: "#173361", windowColor: "#3b82f6",
+                tiles: [], buildings: [], center: { gx: 17.5, gy: 10 },
+                imgUrl: "https://imgur.com/dfwgAu8.png",
+                lines: ["- 노시스", "- 인터넷·정보·데이터 기술", "- 데이터센터·통신탑·전자상가 / 타 구역에 비해 특색이 흐릿한 편", "- 주요 장소: 노시스 본사·인트라넷본부·데이터등대", "- 던전: 외곽·타르타로스 / 블랙라군"]
+            }
+        };
+
+        let TILE_W = 110;
+        let TILE_H = 55;
+
+        function isoToScreen(gx, gy, gz = 0) {
+            const screenX = (gx - gy) * (TILE_W / 2) + camera.x;
+            const screenY = (gx + gy) * (TILE_H / 2) - gz + camera.y;
+            return { x: screenX, y: screenY };
+        }
+
+        function screenToIso(sx, sy) {
+            const relX = sx - camera.x;
+            const relY = sy - camera.y;
+            const gx = (relX / (TILE_W / 2) + relY / (TILE_H / 2)) / 2;
+            const gy = (relY / (TILE_H / 2) - relX / (TILE_W / 2)) / 2;
+            return { gx, gy };
+        }
+
+        function pseudoHash(x, y, seed) {
+            const n = Math.sin(x * 12.9898 + y * 78.233 + seed * 43.123) * 43758.5453;
+            return n - Math.floor(n);
+        }
+
+        function initCityGeometry() {
+            Object.values(DISTRICTS).forEach(d => {
+                d.tiles = []; d.buildings = [];
+            });
+
+            for (let gx = 3; gx <= 19; gx++) {
+                for (let gy = 3; gy <= 17; gy++) {
+                    let secId = 1;
+
+                    if (gx >= 16) secId = 7;
+                    else if (gx >= 3 && gx <= 6) {
+                        if (gy <= 8) secId = 3;
+                        else if (gy <= 12) secId = 4;
+                        else secId = 5;
+                    } else if (gx >= 7 && gx <= 11) {
+                        if (gy <= 6) secId = 2;
+                        else if (gy <= 12) secId = 1;
+                        else secId = 5;
+                    } else if (gx >= 12 && gx <= 15) {
+                        if (gy <= 8) secId = 2;
+                        else secId = 6;
+                    }
+
+                    DISTRICTS[secId].tiles.push({ gx, gy, districtId: secId });
+                }
+            }
+
+            Object.values(DISTRICTS).forEach(dist => {
+                let minH = 20, maxH = 120;
+                if (dist.id === 1) { minH = 30; maxH = 160; }
+                else if (dist.id === 2) { minH = 25; maxH = 130; }
+                else if (dist.id === 3) { minH = 20; maxH = 110; }
+                else if (dist.id === 4) { minH = 20; maxH = 95; }
+                else if (dist.id === 5) { minH = 25; maxH = 115; }
+                else if (dist.id === 6) { minH = 20; maxH = 100; }
+                else if (dist.id === 7) { minH = 15; maxH = 85; }
+
+                dist.tiles.forEach(t => {
+                    if (dist.id === 1 && Math.abs(t.gx - 9) < 0.3 && Math.abs(t.gy - 9.5) < 0.3) {
+                        return; 
+                    }
+
+                    if (pseudoHash(t.gx, t.gy, 1) > 0.01) {
+                        const hRand = pseudoHash(t.gx, t.gy, 2);
+                        const variedH = minH + Math.pow(hRand, 1.3) * (maxH - minH);
+                        
+                        const bWidth = 0.88;
+                        const bDepth = 0.88;
+                        
+                        dist.buildings.push({
+                            gx: t.gx + (1 - bWidth) / 2,
+                            gy: t.gy + (1 - bDepth) / 2,
+                            w: bWidth, d: bDepth,
+                            h: variedH,
+                            districtId: dist.id,
+                            roofType: Math.floor(pseudoHash(t.gx, t.gy, 7) * 4),
+                            hasWindowLights: true
+                        });
+                    }
+                });
+            });
+
+            DISTRICTS[1].tacticalTower = {
+                gx: 9, gy: 9.5,
+                h: 320,
+                radius: 38
+            };
+        }
+
+        function resizeCityCanvas() {
+            if (!pageArchive.offsetWidth) return;
+            cityCanvas.width = window.innerWidth;
+            cityCanvas.height = window.innerHeight;
+            
+            const minDim = Math.min(cityCanvas.width, cityCanvas.height);
+            TILE_W = Math.max(90, Math.min(145, minDim * 0.117));
+            TILE_H = TILE_W / 2;
+
+            camera.x = cityCanvas.width / 2;
+            camera.y = cityCanvas.height / 2 - (TILE_H * 5.5);
+        }
+
+        function drawBackgroundRidges() {
+            cityCtx.save();
+            cityCtx.beginPath();
+            
+            const p1 = isoToScreen(3, 3, 0);
+            const p2 = isoToScreen(3, 17, 0);
+            const p3 = isoToScreen(19, 3, 0);
+
+            cityCtx.moveTo(p1.x - 180, p1.y - 150);
+            cityCtx.lineTo(p2.x - 220, p2.y + 100);
+            
+            for (let y = 17; y >= 3; y--) {
+                const pt = isoToScreen(3, y, Math.sin(y * 0.5) * 35 + 40);
+                cityCtx.lineTo(pt.x - 140 + Math.sin(y * 0.8) * 20, pt.y - 80);
+            }
+            for (let x = 3; x <= 19; x++) {
+                const pt = isoToScreen(x, 3, Math.cos(x * 0.4) * 40 + 50);
+                cityCtx.lineTo(pt.x, pt.y - 120 + Math.cos(x * 0.6) * 25);
+            }
+
+            cityCtx.lineTo(p3.x + 180, p3.y - 150);
+            cityCtx.closePath();
+
+            const ridgeGrad = cityCtx.createLinearGradient(0, 0, 0, cityCanvas.height);
+            ridgeGrad.addColorStop(0, '#0a0e29');
+            ridgeGrad.addColorStop(0.5, '#060920');
+            ridgeGrad.addColorStop(1, '#03040c');
+            cityCtx.fillStyle = ridgeGrad;
+            cityCtx.fill();
+            cityCtx.strokeStyle = 'rgba(143, 156, 255, 0.15)';
+            cityCtx.lineWidth = 1.5;
+            cityCtx.stroke();
+            cityCtx.restore();
+        }
+
+        function drawTile(tile, district, liftY) {
+            const pos = isoToScreen(tile.gx, tile.gy, -liftY);
+            const cliffHeight = 12;
+
+            for (let c = 2; c >= 1; c--) {
+                const cy = c * cliffHeight;
+                cityCtx.beginPath();
+                cityCtx.moveTo(pos.x, pos.y + cy); cityCtx.lineTo(pos.x + TILE_W / 2, pos.y + TILE_H / 2 + cy);
+                cityCtx.lineTo(pos.x, pos.y + TILE_H + cy); cityCtx.lineTo(pos.x - TILE_W / 2, pos.y + TILE_H / 2 + cy);
+                cityCtx.closePath();
+                cityCtx.fillStyle = c === 2 ? district.wallDark : district.tileBase;
+                cityCtx.fill();
+                cityCtx.strokeStyle = district.accentColor || 'rgba(214, 178, 110, 0.2)';
+                cityCtx.lineWidth = 0.5; cityCtx.stroke();
+                
+                cityCtx.beginPath();
+                cityCtx.moveTo(pos.x - TILE_W / 2, pos.y + TILE_H / 2 + (c - 1) * cliffHeight);
+                cityCtx.lineTo(pos.x, pos.y + TILE_H + (c - 1) * cliffHeight);
+                cityCtx.lineTo(pos.x, pos.y + TILE_H + c * cliffHeight);
+                cityCtx.lineTo(pos.x - TILE_W / 2, pos.y + TILE_H / 2 + c * cliffHeight);
+                cityCtx.closePath(); cityCtx.fillStyle = district.wallDark; cityCtx.fill(); cityCtx.stroke();
+
+                cityCtx.beginPath();
+                cityCtx.moveTo(pos.x, pos.y + TILE_H + (c - 1) * cliffHeight);
+                cityCtx.lineTo(pos.x + TILE_W / 2, pos.y + TILE_H / 2 + (c - 1) * cliffHeight);
+                cityCtx.lineTo(pos.x + TILE_W / 2, pos.y + TILE_H / 2 + c * cliffHeight);
+                cityCtx.lineTo(pos.x, pos.y + TILE_H + c * cliffHeight);
+                cityCtx.closePath(); cityCtx.fillStyle = district.wallLight; cityCtx.fill(); cityCtx.stroke();
+            }
+
+            cityCtx.beginPath();
+            cityCtx.moveTo(pos.x, pos.y); cityCtx.lineTo(pos.x + TILE_W / 2, pos.y + TILE_H / 2);
+            cityCtx.lineTo(pos.x, pos.y + TILE_H); cityCtx.lineTo(pos.x - TILE_W / 2, pos.y + TILE_H / 2);
+            cityCtx.closePath();
+
+            const isHovered = hoveredDistrictId === district.id;
+            cityCtx.fillStyle = isHovered ? district.tileHover : district.tileBase;
+            cityCtx.fill();
+            cityCtx.strokeStyle = isHovered ? district.accentColor : 'rgba(255, 255, 255, 0.06)';
+            cityCtx.lineWidth = isHovered ? 1.2 : 0.5; cityCtx.stroke();
+        }
+
+        function drawBuilding(bld, district, liftY, time) {
+            const pos = isoToScreen(bld.gx, bld.gy, -liftY);
+            const w = TILE_W * bld.w * 0.5, h = TILE_H * bld.d * 0.5, bHeight = bld.h;
+            const isHovered = hoveredDistrictId === district.id;
+            const x0 = pos.x, y0 = pos.y + TILE_H / 2;
+
+            cityCtx.beginPath();
+            cityCtx.moveTo(x0 - w, y0); cityCtx.lineTo(x0, y0 + h / 2);
+            cityCtx.lineTo(x0, y0 + h / 2 - bHeight); cityCtx.lineTo(x0 - w, y0 - bHeight);
+            cityCtx.closePath(); cityCtx.fillStyle = district.wallDark; cityCtx.fill();
+            cityCtx.strokeStyle = isHovered ? district.accentColor : 'rgba(255, 255, 255, 0.08)';
+            cityCtx.lineWidth = isHovered ? 1.0 : 0.5; cityCtx.stroke();
+
+            if (bld.hasWindowLights) {
+                cityCtx.fillStyle = district.windowColor;
+                for (let wy = 14; wy < bHeight - 8; wy += 14) cityCtx.fillRect(x0 - w * 0.5, y0 - wy, 2.5, 2.5);
+            }
+
+            cityCtx.beginPath();
+            cityCtx.moveTo(x0, y0 + h / 2); cityCtx.lineTo(x0 + w, y0);
+            cityCtx.lineTo(x0 + w, y0 - bHeight); cityCtx.lineTo(x0, y0 + h / 2 - bHeight);
+            cityCtx.closePath(); cityCtx.fillStyle = district.wallLight; cityCtx.fill();
+            cityCtx.strokeStyle = isHovered ? district.accentColor : 'rgba(255, 255, 255, 0.08)';
+            cityCtx.lineWidth = isHovered ? 1.0 : 0.5; cityCtx.stroke();
+
+            if (bld.hasWindowLights) {
+                cityCtx.fillStyle = district.accentColor;
+                for (let wy = 12; wy < bHeight - 6; wy += 14) cityCtx.fillRect(x0 + w * 0.5, y0 - wy, 2.5, 2.5);
+            }
+
+            cityCtx.beginPath();
+            cityCtx.moveTo(x0, y0 - bHeight - h / 2); cityCtx.lineTo(x0 + w, y0 - bHeight);
+            cityCtx.lineTo(x0, y0 - bHeight + h / 2); cityCtx.lineTo(x0 - w, y0 - bHeight);
+            cityCtx.closePath();
+            cityCtx.fillStyle = isHovered ? district.tileHover : district.roofColor; cityCtx.fill();
+            cityCtx.strokeStyle = district.color; cityCtx.lineWidth = 1.0; cityCtx.stroke();
+
+            if (bld.roofType >= 1 || district.id === 1) {
+                const spireHeight = 14 + (bld.roofType * 6);
+                cityCtx.beginPath(); cityCtx.moveTo(x0, y0 - bHeight); cityCtx.lineTo(x0, y0 - bHeight - spireHeight);
+                cityCtx.strokeStyle = district.color; cityCtx.lineWidth = 1.2; cityCtx.stroke();
+
+                cityCtx.beginPath(); cityCtx.arc(x0, y0 - bHeight - spireHeight, 2.5, 0, Math.PI * 2);
+                cityCtx.fillStyle = district.accentColor;
+                cityCtx.globalAlpha = 0.5 + Math.sin(time * 0.008 + bld.gx) * 0.5;
+                cityCtx.fill(); cityCtx.globalAlpha = 1.0;
+            }
+        }
+
+        function drawTacticalTower(tower, district, liftY, time) {
+            const pos = isoToScreen(tower.gx, tower.gy, -liftY);
+            const x0 = pos.x, y0 = pos.y + TILE_H / 2;
+            const h = tower.h;
+            const r = tower.radius;
+            const isHovered = hoveredDistrictId === district.id;
+
+            cityCtx.beginPath();
+            cityCtx.moveTo(x0 - r, y0);
+            cityCtx.lineTo(x0, y0 + r * 0.5);
+            cityCtx.lineTo(x0, y0 + r * 0.5 - h);
+            cityCtx.lineTo(x0 - r, y0 - h);
+            cityCtx.closePath();
+            cityCtx.fillStyle = '#090c24';
+            cityCtx.fill();
+            cityCtx.strokeStyle = isHovered ? district.accentColor : 'rgba(214, 178, 110, 0.4)';
+            cityCtx.lineWidth = 1.2;
+            cityCtx.stroke();
+
+            cityCtx.fillStyle = '#d6b26e';
+            for (let wy = 30; wy < h - 25; wy += 22) {
+                cityCtx.fillRect(x0 - r * 0.55, y0 - wy, 2, 10);
+            }
+
+            cityCtx.beginPath();
+            cityCtx.moveTo(x0, y0 + r * 0.5);
+            cityCtx.lineTo(x0 + r, y0);
+            cityCtx.lineTo(x0 + r, y0 - h);
+            cityCtx.lineTo(x0, y0 + r * 0.5 - h);
+            cityCtx.closePath();
+            cityCtx.fillStyle = '#131a47';
+            cityCtx.fill();
+            cityCtx.strokeStyle = isHovered ? district.accentColor : 'rgba(214, 178, 110, 0.4)';
+            cityCtx.lineWidth = 1.2;
+            cityCtx.stroke();
+
+            cityCtx.fillStyle = '#f3d99b';
+            for (let wy = 30; wy < h - 25; wy += 22) {
+                cityCtx.fillRect(x0 + r * 0.35, y0 - wy, 2, 10);
+            }
+
+            cityCtx.beginPath();
+            cityCtx.moveTo(x0, y0 - h - r * 0.65);
+            cityCtx.lineTo(x0 + r, y0 - h);
+            cityCtx.lineTo(x0, y0 + r * 0.5 - h);
+            cityCtx.lineTo(x0 - r, y0 - h);
+            cityCtx.closePath();
+            cityCtx.fillStyle = '#1d2766';
+            cityCtx.fill();
+            cityCtx.strokeStyle = '#d6b26e';
+            cityCtx.lineWidth = 1.5;
+            cityCtx.stroke();
+
+            const topX = x0;
+            const topY = y0 - h - (r * 1.15);
+            
+            cityCtx.beginPath();
+            cityCtx.moveTo(x0, y0 - h - r * 0.65);
+            cityCtx.lineTo(topX, topY);
+            cityCtx.strokeStyle = '#d6b26e';
+            cityCtx.lineWidth = 2;
+            cityCtx.stroke();
+
+            const pulseRadius = 12 + Math.sin(time * 0.005) * 4;
+            cityCtx.beginPath();
+            cityCtx.arc(topX, topY, pulseRadius, 0, Math.PI * 2);
+            cityCtx.fillStyle = 'rgba(214, 178, 110, 0.3)';
+            cityCtx.fill();
+
+            cityCtx.beginPath();
+            cityCtx.arc(topX, topY, 3.5, 0, Math.PI * 2);
+            cityCtx.fillStyle = '#ffffff';
+            cityCtx.shadowColor = '#d6b26e';
+            cityCtx.shadowBlur = 15;
+            cityCtx.fill();
+            cityCtx.shadowBlur = 0;
+        }
+
+        function renderCityScene(timestamp) {
+            if (pageArchive.classList.contains('active')) {
+                cityCtx.clearRect(0, 0, cityCanvas.width, cityCanvas.height);
+                drawBackgroundRidges();
+
+                Object.keys(districtLift).forEach(id => {
+                    const target = districtTargetLift[id];
+                    districtLift[id] += (target - districtLift[id]) * 0.18;
+                });
+
+                const renderStack = [];
+                Object.values(DISTRICTS).forEach(dist => {
+                    const lift = districtLift[dist.id];
+                    dist.tiles.forEach(tile => renderStack.push({ type: 'tile', depth: tile.gx + tile.gy + (dist.id === 7 ? 0.3 : 0), tile, district: dist, lift }));
+                    dist.buildings.forEach(bld => renderStack.push({ type: 'building', depth: bld.gx + bld.gy + 0.2 + (dist.id === 7 ? 0.3 : 0), bld, district: dist, lift }));
+                    
+                    if (dist.tacticalTower) {
+                        const t = dist.tacticalTower;
+                        renderStack.push({ type: 'tower', depth: t.gx + t.gy + 0.25, tower: t, district: dist, lift });
+                    }
+                });
+                renderStack.sort((a, b) => a.depth - b.depth);
+
+                renderStack.forEach(item => {
+                    if (item.type === 'tile') drawTile(item.tile, item.district, item.lift);
+                    else if (item.type === 'building') drawBuilding(item.bld, item.district, item.lift, timestamp);
+                    else if (item.type === 'tower') drawTacticalTower(item.tower, item.district, item.lift, timestamp);
+                });
+
+                updateFloatingBadge();
+            }
+            requestAnimationFrame(renderCityScene);
+        }
+
+        function updateFloatingBadge() {
+            const badgeEl = document.getElementById('floating-badge');
+            
+            if (hoveredDistrictId && DISTRICTS[hoveredDistrictId]) {
+                const dist = DISTRICTS[hoveredDistrictId];
+                const centerScreen = isoToScreen(dist.center.gx, dist.center.gy, -districtLift[dist.id] + 55);
+                badgeEl.style.transform = `translate3d(${centerScreen.x}px, ${centerScreen.y}px, 0)`;
+                document.getElementById('badge-code').innerText = dist.code; 
+                document.getElementById('badge-name').innerText = dist.name; 
+                document.getElementById('badge-sub').innerText = dist.sub;
+                badgeEl.classList.remove('hidden');
+            } else {
+                badgeEl.classList.add('hidden');
+            }
+        }
+
+        function getDistrictFromMouse(mouseX, mouseY) {
+            const isoPos = screenToIso(mouseX, mouseY);
+            const gx = Math.floor(isoPos.gx), gy = Math.floor(isoPos.gy);
+            for (const dist of Object.values(DISTRICTS)) {
+                if (dist.tiles.find(t => t.gx === gx && t.gy === gy)) return dist.id;
+            }
+            return null;
+        }
+
+        // Pointer Events: 마우스/터치/펜 공통. 드래그(임계값 초과)와 탭을 구분한다.
+        const DRAG_THRESHOLD = 6; // px
+        let activePointerId = null, dragMoved = false, pointerDownPos = { x: 0, y: 0 };
+
+        function localPos(e) {
+            const rect = cityCanvas.getBoundingClientRect();
+            return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+        }
+
+        function setHover(id) {
+            if (id === hoveredDistrictId) return;
+            if (hoveredDistrictId) districtTargetLift[hoveredDistrictId] = 0;
+            hoveredDistrictId = id;
+            if (id) districtTargetLift[id] = 22;
+        }
+
+        cityCanvas.addEventListener('pointerdown', (e) => {
+            if (e.pointerType === 'mouse' && e.button !== 0) return;
+            if (activePointerId !== null) return; // 멀티터치 무시
+            activePointerId = e.pointerId;
+            isDragging = true;
+            dragMoved = false;
+            dragStart = localPos(e);
+            pointerDownPos = { ...dragStart };
+            cityCanvas.setPointerCapture(e.pointerId);
+        });
+
+        cityCanvas.addEventListener('pointermove', (e) => {
+            const pos = localPos(e);
+            if (isDragging && e.pointerId === activePointerId) {
+                if (!dragMoved && Math.hypot(pos.x - pointerDownPos.x, pos.y - pointerDownPos.y) > DRAG_THRESHOLD) dragMoved = true;
+                if (dragMoved) { camera.x += pos.x - dragStart.x; camera.y += pos.y - dragStart.y; }
+                dragStart = pos;
+                return;
+            }
+            if (e.pointerType === 'mouse') setHover(getDistrictFromMouse(pos.x, pos.y));
+        });
+
+        function endPointer(e, cancelled) {
+            if (e.pointerId !== activePointerId) return;
+            const wasDrag = dragMoved;
+            isDragging = false;
+            activePointerId = null;
+            dragMoved = false;
+            if (cancelled || wasDrag) return;
+            const hitId = getDistrictFromMouse(localPos(e).x, localPos(e).y);
+            if (e.pointerType !== 'mouse') setHover(hitId);
+            if (hitId) openSectorSidebar(hitId);
+        }
+        cityCanvas.addEventListener('pointerup', (e) => endPointer(e, false));
+        cityCanvas.addEventListener('pointercancel', (e) => endPointer(e, true));
+        cityCanvas.addEventListener('pointerleave', (e) => { if (e.pointerType === 'mouse' && !isDragging) setHover(null); });
+
+        // 구역별 연관 세력/캐릭터: teams는 TEAMS의 id, chars는 CHARACTERS의 id
+        const SECTOR_RELATIONS = {
+            1: { teams: ['doberman', 'dayoff'], chars: ['CH-009', 'CH-010', 'CH-011'] },  // A 아케론
+            3: { teams: ['undercore'] },                                                   // C 칼리오페
+            4: { teams: ['heiya'] }                                                        // D 디노시아
+        };
+
+        function openRelatedTeam(id) { showPage('characters'); openTeamView(id); }
+        function openRelatedChar(id) { showPage('characters'); openCharacterDetail(id); }
+
+        function renderSectorRelated(distId) {
+            const box = document.getElementById('sector-related');
+            box.replaceChildren();
+            const color = DISTRICTS[distId].color;
+            const rel = SECTOR_RELATIONS[distId] || {};
+            const teams = (rel.teams || []).map(id => TEAMS.find(t => t.id === id)).filter(Boolean);
+            const chars = (rel.chars || []).map(charById).filter(Boolean);
+            if (!teams.length && !chars.length) {
+                box.appendChild(el('p', 'rel-empty', '등록된 연관 세력/캐릭터가 없습니다.'));
+                return;
+            }
+            const addGroup = (label, items, onClick) => {
+                if (!items.length) return;
+                const wrap = el('div');
+                wrap.appendChild(el('div', 'rel-label', label));
+                const chips = el('div', 'rel-chips');
+                items.forEach(it => {
+                    const b = el('button', 'rel-chip');
+                    b.type = 'button';
+                    b.style.setProperty('--c', color);
+                    b.append(el('span', '', it.name), el('small', '', it.sub));
+                    b.addEventListener('click', () => onClick(it.id));
+                    chips.appendChild(b);
+                });
+                wrap.appendChild(chips);
+                box.appendChild(wrap);
+            };
+            addGroup('FACTION · 세력', teams.map(t => ({ id: t.id, name: t.name, sub: t.unit })), openRelatedTeam);
+            addGroup('CHARACTER · 캐릭터', chars.map(c => ({ id: c.id, name: c.name, sub: ROLE_LABEL[c.role] || ROLE_LABEL.other })), openRelatedChar);
+        }
+
+        // 구역 바로가기 독 (A~G): 모바일에서 지도 탭이 어려울 때의 보완
+        const dock = document.getElementById('sector-dock');
+        Object.values(DISTRICTS).forEach(d => {
+            const b = document.createElement('button');
+            b.type = 'button';
+            b.dataset.id = d.id;
+            b.textContent = d.name.charAt(0).toUpperCase();
+            b.style.setProperty('--c', d.color);
+            b.setAttribute('aria-label', `${d.code} ${d.name}`);
+            b.addEventListener('click', () => { setHover(d.id); openSectorSidebar(d.id); });
+            dock.appendChild(b);
+        });
+        function syncDock() {
+            dock.querySelectorAll('button').forEach(b => b.classList.toggle('on', Number(b.dataset.id) === selectedDistrictId));
+        }
+
+        function openSectorSidebar(distId) {
+            selectedDistrictId = distId;
+            const dist = DISTRICTS[distId];
+
+            document.getElementById('sidebar-sector-id').innerText = dist.code;
+            document.getElementById('sidebar-sector-title').innerText = dist.name;
+            document.getElementById('sidebar-icon').innerHTML = dist.iconHtml;
+            
+            const imgEl = document.getElementById('sidebar-sector-img');
+            imgEl.src = dist.imgUrl ? dist.imgUrl : 'https://placehold.co/400x200/080c24/d6b26e?text=' + encodeURIComponent(dist.name);
+
+            document.getElementById('sidebar-content-body').innerHTML = dist.lines.map((line, idx) => {
+                let cls = "text-gray-300";
+                if (idx === 0) cls = "text-[#d6b26e] font-semibold text-sm font-serif-gothic tracking-wider";
+                if (line.includes("귀속 던전: 없음") || line.includes("던전:")) cls = "text-emerald-400 font-semibold";
+                if (line.startsWith("- 陰:")) cls = "text-pink-400 font-semibold";
+                return `<div class="${cls}">${line}</div>`;
+            }).join('');
+
+            renderSectorRelated(distId);
+            syncDock();
+            document.getElementById('sector-sidebar').classList.remove('translate-x-full');
+            document.getElementById('sidebar-backdrop').classList.remove('opacity-0', 'pointer-events-none');
+        }
+
+        function closeSidebar() {
+            document.getElementById('sector-sidebar').classList.add('translate-x-full');
+            document.getElementById('sidebar-backdrop').classList.add('opacity-0', 'pointer-events-none');
+            selectedDistrictId = null;
+            setHover(null);
+            syncDock();
+        }
+
+                let resizeTimer = null;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                snows.forEach(s => s.resize());
+                if (pageArchive.classList.contains('active')) resizeCityCanvas();
+            }, 120);
+        });
+
+        window.addEventListener('load', () => {
+            requestAnimationFrame(snowLoop);
+            resizeCityCanvas();
+            initCityGeometry();
+            requestAnimationFrame(renderCityScene);
+        });
+
+// ===== 캐릭터 페이지 =====
+        // ※ 아래 데이터는 샘플입니다. 이 배열만 수정하면 목록/상세가 자동으로 갱신됩니다.
+        // role: 'contractor' | 'guide' | 'other' / imgUrl은 비워두면 아이콘이 표시됩니다.
+        const CHARACTERS = [
+    {
+        id: "CH-001",
+        name: "권태혁",
+        position: "팀장",
+        role: "contractor",
+        age: "27",
+        sex: "남",
+        height: "190cm",
+        org: "아케론 현장대응1팀 · 도베르만",
+        weapon: "건틀릿",
+        ability: "중력 조작",
+        taboo: "위험에 처한 이를 외면한다 (신체적 폭력 상황 한정)",
+        traits: ["이상적 히어로의 표본", "개빡센군기리더", "은근한 허당"],
+        desc: "권태혁의 사물함에는 접힌 유도복이 들어 있다. 검은 띠는 매듭이 낡았고, 소매 끝은 여러 번 빨아 색이 바랬다. 한때 그의 이름은 대회 대진표 맨 위에 적혀 있었다. 어느 해 가을 그는 불현듯 도장을 나왔고, 아케론 입사 서류의 지원 동기란에는 아무것도 적지 않았다. 담당자도 더 묻지 않았다.\n\n지금의 그는 세 줄짜리 보고서를 쓰고, 작전이 시작되면 가장 앞줄에 선다. 유독 피곤한 밤마다 사물함을 열어 보는 그의 습관은 아무도 모른다. 안쪽 벽에는 크레용으로 그린 그림이 한 장 붙어 있다. 망토를 두른 사람이 서 있고, 그 옆에 삐뚤빼뚤한 글씨로 히어로라고 적혀 있다. 권태혁은 그것을 오래 바라보지 않는다. 문을 닫고, 다음 날 누구보다 먼저 현장에 도착할 뿐이다.",
+        notes: [],
+        imgUrl: "https://i.imgur.com/FRxjik6.png",
+        comments: [
+            { author: "익명A", role: "시민", text: "이분 잠은 자면서 일하나요?" },
+            { author: "익명B", role: "시민", text: "역시 사람은 운동을 해야돼 ㅋㅋ" }
+        ]
+    },
+    {
+        id: "CH-002",
+        name: "선우 현",
+        role: "contractor",
+        age: "27",
+        sex: "남",
+        height: "183cm",
+        org: "아케론 현장대응1팀 · 도베르만",
+        weapon: "석궁",
+        ability: "취약점 생성",
+        taboo: "[[본인 요청 삭제]]",
+        traits: ["외강내유", "도베르만 사회성 담당", "브라콤"],
+        desc: "선우 현은 흠이 없는 사람이 아니라 흠이 보이지 않게 다려 입은 사람이다. 셔츠는 늘 반듯하고, 목소리는 늘 반 톤 낮으며, 웃음은 알맞은 자리에서 알맞은 길이로 끝난다. 그는 누구에게나 공평하게 다정하다. 털어도 먼지 한 줌 안 나올 것처럼 반듯한 인간은, 동생의 이름 앞에서 한없이 불공평해진다. 미등록자를 경계하는 도시에서, 등록을 거부한 채 가출한 동생을 모르는 척 해주는 것은 그가 할 수 있는 최대의 편애일 것이다.",
+        notes: [],
+        imgUrl: "https://i.imgur.com/VNTjhwM.png",
+        comments: [
+            { author: "익명A", role: "시민", text: "실제로 봤는데 좀 재수없는 타입임. 지 혼자 고고한 척하는 애들 알지" },
+            { author: "익명B", role: "시민", text: "열등감 ㅈ되네 하층민임?", replyTo: 0 },
+            { author: "익명C", role: "시민", text: "B급 던전 클리어하고 헥헥거리던데 괜찮은 거 맞냐" }
+        ]
+    },
+    {
+        id: "CH-003",
+        name: "유빈",
+        role: "contractor",
+        age: "27",
+        sex: "남",
+        height: "185cm",
+        org: "아케론 현장대응1팀 · 도베르만",
+        weapon: "스피어",
+        ability: "인지 조작(최면·세뇌)",
+        abilityDesc: "무슨 말을 하든 ‘그럴 듯하게’, 불합리도 진실로 만들 수 있다.",
+        taboo: "거짓된 사랑을 말한다",
+        traits: ["금발 태닝 양아치", "F사 둥지 도련님", "각인까지 했던 가이드有(임무 중 사망)"],
+        desc: "소문에 따르면 그의 연인은 분기마다 바뀐다. 여름에는 관능적인 미녀를 선호하고, 겨울에는 음울한 남자가 끌린다나. 무엇이든 쉽게 얻고 쉽게 내려놓는 사람처럼 보였다. 그리고 유빈은 그 가벼움을 해명하는 데 애쓰지 않는다.\n\n이것은 타고나길 영악하여 사람을 이용해먹는 것보다는… 그래, 이런 방법의 사랑밖에 알지 못해서 생겨난 결과라고 볼 수 있다. 유빈에게 있어 연애란 일종의 유희에 가까웠다. 진중한 감정, 그런 걸 알려주려 했던 사람이 있었던 것도 같은데…. 끝을 보기도 전에 사라져버렸다. 그 이후로 유빈은 어울리지 않는 말을 중얼거린다. *역시, 남겨지는 건 별로라고.*",
+        notes: [],
+        imgUrl: "https://i.imgur.com/9UqL3c0.png",
+        comments: [
+            { author: "익명A", role: "시민", text: "창 쓰는 남자… 줄여서" },
+            { author: "익명B", role: "시민", text: "그건 안된다", replyTo: 0 },
+            { author: "익명C", role: "시민", text: "사이비가 보면 침 질질 흘릴 능력 ㅋㅋ" }
+        ]
+    },
+    {
+        id: "CH-004",
+        name: "지강민",
+        role: "contractor",
+        age: "24",
+        height: "178cm",
+        org: "아케론 현장대응1팀 · 도베르만",
+        weapon: "쇄검",
+        ability: "그림자 포식",
+        taboo: "성장하길 포기한다",
+        traits: ["아르바이트 고수", "생활력 최고", "배신자 프레임"],
+        desc: "지강민은 도베르만에서 가장 어리고, 가장 늦게 스카웃 된 사람이다. 스스로를 굴러온 돌처럼 여기는지 분위기가 굳으면 제일 먼저 나서서 궂은 일을 자처한다. 예쁨 받는 행동을 잘 알고 있으며, 실행도 곧잘 하는 녀석. 선배들 사이에서는 동생 삼고 싶은 놈으로 통한다. 지강민은 그 말에 늘 웃으며 고개를 숙인다. *아이, 아니에요. 선배들이 잘 챙겨준 덕분이죠.*\n\n다만 그의 이름이 처음 불린 곳은 아케론의 명단이 아니었다. 지강민은 한때 미등록자로, 언더코어에서 활동했었다. 지금 그 이름을 대는 이들은 그가 친구를 버리고 기업에 붙었다고 말한다. 물론 지강민은 부정하지 않는다. 친구를 팔아서라도 어떻게든 성공하고 싶어 노력하는 모습은, 꼭 *나를 좀 봐줘*라고 소리치는 것 같았다.",
+        notes: [],
+        imgUrl: "https://i.imgur.com/QL8vwNY.png",
+        comments: [
+            { author: "익명A", role: "시민", text: "하층민이 돈은 없어도 의리는 있는데 얘는 돈도 없고 의리도 없네" },
+            { author: "익명B", role: "시민", text: "하층민 탈출함 심한말 ㄴ", replyTo: 0 }
+        ]
+    },
+    {
+        id: "CH-005",
+        name: "최건엽",
+        position: "팀장",
+        role: "contractor",
+        age: "21",
+        sex: "남",
+        height: "183cm",
+        org: "아케론 현장대응2팀 · 데이오프",
+        weapon: "카타나",
+        ability: "공간 절단",
+        taboo: "자신을 변명한다",
+        traits: ["‘최종호’의 아들", "금욕적", "열혈과 냉정의 경계"],
+        desc: "최건엽은 위기 앞에서 제일 먼저 웃는 사람이다. 겁이 없어서가 아니라, 자기가 웃어야 뒤에 선 사람들이 숨을 쉴 수 있다는 걸 알기 때문이다. 그는 큰소리를 치고, 하찮은 일에도 내기를 걸며, 남의 일에 기어이 끼어든다. 그렇게 시끄럽게 굴다가도 누군가 자기 이야기를 물어오면 화제를 슬쩍 돌린다. 누가 봐도 서툰 솜씨인데, 정작 본인만 들키지 않았다고 믿는다.\n\n공간을 베어내며 흩날리는 파편 속에서 최건엽은 자신의 모습을 본다. 누군가와 끔찍할 정도로 닮은 그 얼굴을. 그 잔상과 마주칠 때마다 서둘러 검을 내지르는 모습은, 최건엽을 오래 지켜본 이들만 아는 미세한 균열이다.",
+        notes: [{"term": "최종호", "text": "계약자가 연예인이나 다름없는 인기와 인지도를 얻는 데 크게 영향을 끼친 인물. 건실한 이미지로 호감을 샀던 그는, ‘하층민들의 신체를 대가로 악마와 거래’했다는 사실이 밝혀지며 몰락했다."}],
+        imgUrl: "https://i.imgur.com/s9UzDZZ.png",
+        comments: [
+            { author: "익명A", role: "시민", text: "아케론은 얘 뭘 믿고 쓰는거임? 또 통수맞으려고?ㅋㅋ" },
+            { author: "익명B", role: "시민", text: "이런 놈도 시민권이 있네 ㅋ 하층민 오열" },
+            { author: "익명C", role: "시민", text: "와 근데 최종호랑 조온나 닮았다… ptsd와도 인정" }
+        ]
+    },
+    {
+        id: "CH-006",
+        name: "이찬영",
+        role: "contractor",
+        age: "21",
+        sex: "남",
+        height: "189cm",
+        org: "아케론 현장대응2팀 · 데이오프",
+        weapon: "게임 컨트롤러",
+        ability: "염동력",
+        taboo: "스스로를 부끄러워 한다",
+        traits: ["찐따", "가이딩=편법 수준의 호감도 치트", "이찬영=스탯 잘못 찍은 망캐"],
+        desc: "구부정한 어깨, 덥수룩한 머리. 자신이 아는 주제가 아니면 입을 꾹 닫는 모습까지 영략없는 히키코모리의 모습이다. 그리고 대부분의 히키가 그렇듯 사람들 앞에 나서는 것을 싫어한다. 그렇기에 이찬영은 언제나 한 발 뒤 그늘에 서 있다.\n\n손에 쥔 컨트롤러의 버튼을 딸깍거릴 때마다 악마의 머리 위로 묵직한 철골이 꺾여 떨어진다. 자신이 구한 시민들이 울먹이며 다가와 감사 인사를 건네면, 그는 찌푸린 낯으로 손을 슬그머니 치우며 퉁명스럽게 웅얼거린다.\n\n현장대응팀을 마치 대단한 '영웅'이라도 되는 양 숭배하는 항간의 시선에 대해서도 그는 늘 유치하다며 코웃음을 쳤다. 대의니 구원이니 하는 거창한 명목은 이 도시와 도무지 어울리지 않는 코미디라 여겼기 때문이다. 그러나 모두가 비웃는 그 유치함이야말로 가장 소중한 가치라는 사실을, 그는 어렴풋이 짐작하고 있다.",
+        notes: [],
+        imgUrl: "https://i.imgur.com/LDkG9KR.png",
+        comments: [
+            { author: "익명A", role: "시민", text: "찐따 컨셉임? 컨셉이지? 컨셉…맞지?" },
+            { author: "익명B", role: "시민", text: "담당일찐 붙여주고 싶네 ㅋㅋ" },
+            { author: "익명C", role: "시민", text: "신성운 함 붙여?", replyTo: 1 }
+        ]
+    },
+    {
+        id: "CH-007",
+        name: "유태오",
+        role: "contractor",
+        age: "21",
+        sex: "남",
+        height: "180cm",
+        org: "아케론 현장대응2팀 · 데이오프",
+        weapon: "배틀액스",
+        ability: "시야제한·공유",
+        taboo: "혼전순결을 깨트린다",
+        traits: ["괴짜", "연구자 집안", "입력·출력값 동일"],
+        desc: "유태오는 모르는 것을 그냥 지나치지 못한다. 잠긴 문이 있으면 열어 보고, 열리지 않으면 왜 안 열리는지 알아낼 때까지 그 앞을 떠나지 않는다. 그 대상이 던전이든 악마든, 옆자리에 앉은 팀원이든 크게 다르지 않다. 악의는 없다.\n\n정찰에서 돌아온 그의 보고서는 정확하고 빠르며, 다음 줄에는 늘 누군가의 시말서가 붙어 있다.\n\n팀원들은 그를 미워하지 못한다. 대신 그가 다음에 무엇을 궁금해할지 조금 불안해한다. 그가 아케론에 들어온 이유는 별을 보는 망원경 한 대였다고 한다. 멀리 있는 것을 자세히 보고 싶다는 마음이 이렇게 가까운 사람들에게까지 닿을 줄은, 아마 본인도 몰랐을 것이다.",
+        notes: [],
+        imgUrl: "https://i.imgur.com/jwlwUsX.png",
+        comments: [
+            { author: "익명A", role: "시민", text: "이분 금기가 그…거라고 하던데 찐임?" },
+            { author: "익명B", role: "시민", text: "ㅇㅇ", replyTo: 0 },
+            { author: "익명C", role: "시민", text: "X발 불쌍해", replyTo: 1 },
+            { author: "익명D", role: "시민", text: "볼때마다 이 사람이 제일 이상함. 현장팀 사고의 8할은 이분 때문에 나오는듯" },
+            { author: "익명E", role: "시민", text: "도시 사람이면 다 아는 사실을 구구절절 설명하는 이유좀", replyTo: 3 }
+        ]
+    },
+    {
+        id: "CH-008",
+        name: "강은성",
+        role: "contractor",
+        age: "21",
+        sex: "남",
+        height: "178cm",
+        org: "아케론 현장대응2팀 · 데이오프",
+        weapon: "케인소드",
+        ability: "매직카드",
+        abilityDesc: "속박·폭파·순간이동 등 유용한 능력을 지닌 카드를 다룬다",
+        taboo: "손해를 감수한다",
+        traits: ["넉살 좋은 처세술가", "현장2팀 수습담당", "선의는 이해 불가"],
+        desc: "강은성의 유년 시절은 멍청하도록 착한 이들이 어떻게 뜯어먹히는지 목격하는 시간이었다. 남겨진 피눈물은 그에게 인생의 손익을 헤아리는 법을 가르쳤다. 3인방의 기행에 곤란하다는 듯 한숨을 내쉬고, 결국 그 짓거리에 동참하는─심지어 본인도 즐기는─ 모습을 보이면서도 '팀워크는 비즈니스'라 말하는 이유 역시 그 때문이다.\n\n정면승부는 비효율이라 매몰차게 굴면서도, 비효율적인 온기 속에서 가장 많이 고생하고 가장 자주 웃는다. 고장 난 계산기를 두드리듯 입꼬리를 비틀어 올릴 때마다, 그 옛날 제 몫을 내어주던 가족들의 얼굴이 조용히 겹쳐든다.",
+        notes: [],
+        imgUrl: "https://i.imgur.com/fHHmxiw.png",
+        comments: [
+            { author: "익명A", role: "시민", text: "언럭키 지강민?" },
+            { author: "익명B", role: "시민", text: "팀원들이 사고 친 거 수습하고 다니던데… 안쓰럽다" }
+        ]
+    },
+    {
+        id: "CH-009",
+        name: "서태주",
+        role: "contractor",
+        age: "26",
+        sex: "남",
+        height: "178cm",
+        org: "개인 계약자",
+        weapon: "대낫",
+        ability: "초재생",
+        abilityDesc: "베어 넘겨지는 속도보다 살점이 차오르는 속도가 더 빠르다",
+        taboo: "정해진 일에 미련을 가진다",
+        traits: ["E사 둥지 도련님", "병약 허약 심약", "장기 대부분을 의체로 교체"],
+        desc: "태어나길 다정한 사람. 태어나길 병약한 사람. 또… E사 기술의 집합체라고 볼 수도 있다. 서태주의 가족은 천문학적인 비용을 들여 그의 병든 장기를 고장나지 않게 바꿨고, 꺼져가는 생명에 억지로 기름을 부었다. 그렇게 꾸역꾸역 연장한 생명이 도시 시민들의 피눈물 위에 세워졌음을 그 역시 알고 있다.\n\n높고 정갈한 유리창 안에서 링거액 떨어지는 소리만 들으며 자란 소년은, 제게 남겨진 한뼘짜리 수명을 원망하는 대신 피비린내 섞인 전장 한복판으로 걸어 들어갔다. 그는 적을 베어 넘기는 일 대신 무너진 더미 아래에서 시민을 건져 올리는 편을 택했다. 신기하게도, 그는 온실 속 화초처럼 ‘관리’되던 병상에서의 생활보다 지금이 더 숨통이 트인다고 한다.",
+        notes: [],
+        imgUrl: "https://i.imgur.com/5974aQ6.png",
+        comments: [
+            { author: "익명A", role: "시민", text: "청색교단이 얘 ㅈㄴ물빨핥 하더라" },
+            { author: "익명B", role: "시민", text: "그럴만하지 않음? 도시에서 보기 힘든 성인군자셔", replyTo: 0 }
+        ]
+    },
+    {
+        id: "CH-010",
+        name: "연서헌",
+        role: "guide",
+        grade: "B",
+        age: "21",
+        sex: "남",
+        height: "186cm",
+        org: "개인 가이드",
+        traits: ["동생 바보", "고생만 많이했지 경험은 없음", "얽매이는 일 거부"],
+        desc: "인상은 험악, 인성은 파탄, 가이딩은 불친절. 아케론 내에서 엮이고 싶지 않은 인물 1위에 해당한다.\n\n막장 보호자가 많은 도시라지만 D구역은 특히나 도박에 미쳐 전재산 꼬라박고 자식들에게 빚을 떠안기는 놈들이 많다. 연서헌의 친부 역시 그런 부류였다. ‘크게 베팅할수록 크게 번다’ 라는 단편적인 환상에 눈이 멀어 사채까지 빌려 쓰던 인간. 그리고 그 많은 빚은, 어린 자식들에게 고스란히 떠넘겨졌다.\n\n도시에선 인권보다 채권이 더 중요하다. 사회의 안전망에 속하지 못해도 명의는 남는다. 열 살 남짓한 여동생의 손에 쥐어진 건 삐뚤빼뚤하게 적힌 사채 장부뿐이었다. 연서헌이 스카웃 서류를  받자마자 전장에 제 발로 쳐들어간 까닭도 거기에 있다.\n\n높은 매칭률을 자랑하는 계약자가 나타나도 그가 손등의 각인을 극구 거부하는 이유는 단순했다. 파트너 하나에 묶여 일감이 줄어들면, 매달 챙기던 야간 출동 보너스와 부업거리들이 통째로 날아가기 때문이다.",
+        notes: [],
+        imgUrl: "https://i.imgur.com/DgzFsjn.png",
+        comments: [
+            { author: "익명A", role: "시민", text: "이 얼굴이 어떻게 최건엽이랑 동갑?" },
+            { author: "익명B", role: "시민", text: "뭔 최건엽이여 ㅋ 걔도 노안인데", replyTo: 0 },
+            { author: "익명C", role: "시민", text: "최종호 아들이 ㅈ으로 보이냐", replyTo: 1 },
+            { author: "익명D", role: "시민", text: "나 던전 자주 생기는 곳에 사는데 솔직히 좀 정듦. 열심히 일하더라" }
+        ]
+    },
+    {
+        id: "CH-011",
+        name: "이준호",
+        role: "guide",
+        grade: "S",
+        age: "33",
+        height: "191cm",
+        org: "개인 가이드",
+        traits: ["안면 인식에 심각한 문제", "기억의 공백", "계약자→가이드 특이 케이스"],
+        desc: "사람들의 기억 속 이준호는 유능한 계약자였다. 아케론의 손과 발이자 무기로서 시민들을 보호하는 게 삶의 전부였던 사람. 하지만 그는 불현듯 금기를 깨고 모든 것을 망각했다.\n\n계약자로 보낸 시간이 많은 만큼 잃어버린 것 또한 차고 넘치게 많았다. 인생의 절반이 허구로 재구성되었고, 본인 역시 그 사실을 어렴풋이 인지하고 있다. 그렇다고 해서, 할 수 있는 게 남았을까? ‘계약자 이준호’의 [[정보와 기록은 기업의 검열 대상이 되어 사라졌다]]. 함께 일했던 동료들의 [[얼굴도, 이름도]]… 기억나지 않는다. 그 뒤로 방황의 시간을 보낸 건 필연적이었다.\n\n…\n\n그런 이준호가 아케론에 다시 방문한 것은, 계약자가 아닌 가이드 신분으로.\n\n역할은 다르지만 그는 쓸데없이 유능했다. 다른 점이 있다면 이준호는 예전보다 괴팍해졌다는 것. 틈만 나면 욕설에 실내 흡연, 그것을 지적하면 엿이나 먹으라는 태도까지. 이미 바닥난 영혼을 가지고 타인의 영혼을 붙든다. 그에게 있어 가이딩이란 귀찮은 잔업에 가까웠다.",
+        notes: [],
+        imgUrl: "https://i.imgur.com/bXxouWs.png",
+        comments: [
+            { author: "익명A", role: "시민", text: "이준호 예전엔 생태 눈깔이었는데 왜 동태됨;;?" },
+            { author: "익명B", role: "시민", text: "머리에 잡혀가기 전에 지워", replyTo: 0 }
+        ]
+    },
+    {
+        id: "CH-012",
+        name: "백은호",
+        role: "contractor",
+        age: "25",
+        sex: "남",
+        height: "186cm",
+        org: "흥신소 · 흑야",
+        weapon: "언월도",
+        ability: "환수(백호)",
+        taboo: "동료를 의심한다",
+        traits: [],
+        desc: "D구 하층의 뒷골목에서 태어난 백은호는 한 번도 혼자 밥을 먹어 본 적이 없었다. 문턱에 앉아 있으면 누군가 국그릇을 내밀었고, 넘어져 무릎이 깨지면 누군가 욕을 하면서 약을 발라 주었다. 기업은 이 골목을 지도에 그리지 않았지만, 이 골목은 그를 키웠다. 천애고아인 백은호가 세상을 비정하게 바라보지 않은 건 동네에서 통용되는 ‘상식’ 덕분이었다. *도시가 아무리 살기 팍팍해도, 어린 아이는 행복하게 해주자고.*\n\n그는 자라서 흥신소를 열었다. 사람들은 그를 험상궂은 해결사로 알고 있다. 의뢰비는 받는 날보다 깎아 주는 날이 많고, 밤늦게 악마의 습격 소식이 들리면 그는 누구보다 먼저 문을 나선다. 왜 그렇게까지 하느냐고 물으면 그는 잠시 생각하다가 별것 아니라는 듯 대답한다. *내 상식대로 사는 것뿐이야.*",
+        notes: [],
+        imgUrl: "https://imgur.com/sAI2Khe.png",
+        comments: [
+            { author: "익명A", role: "시민", text: "백은호 실제로 봤는데 ㅈㄴ무섭더라" },
+            { author: "익명B", role: "시민", text: "은호 형님이 니 친구냐? 하층의 은인 같은 분이다.", replyTo: 0 },
+            { author: "익명C", role: "시민", text: "“진짜 대협”" }
+        ]
+    },
+    {
+        id: "CH-013",
+        name: "윤단오",
+        role: "contractor",
+        age: "25",
+        sex: "남",
+        height: "184cm",
+        org: "흥신소 · 흑야",
+        weapon: "알려지지 않음",
+        ability: "결정혈",
+        abilityDesc: "본인 혹은 타인의 피로 무기를 만들어 사용",
+        taboo: "제 몫의 선택을 타인에게 떠넘긴다",
+        traits: ["C사 둥지 도련님", "전통 무용(무형문화)가문 후계", "조신한 도련님 페르소나와 그렇지 못한 본성"],
+        desc: "윤단오의 하루는 통금 시각에 맞춰 끝난다. 적어도 집안 기록에는 그렇게 적혀 있다. 둥지의 높은 창 아래에서 그는 절하는 각도까지 정해진 춤을 익히며 자랐고, 어른들 앞에서는 지금도 목소리를 반 톤 낮춘다.\n\n그런 윤단오가 밤이면 하층의 골목에 나타난다.\n\n백은호가 이름도 모르는 노인의 외상값을 아무렇지 않게 대신 치르는 것을 뒤에서 팔짱을 낀 채 지켜본다. 그러고는 은호가 돌아서기 전에 셈이 모자란 만큼을 슬쩍 채워 둔다. *저런 애는 우리 같은 사람이 없으면 바로 사기당해.* ─라고 말하면서 정작 ‘우리 같은 사람’이 무엇인지, 왜 백은호 같은 사람과 본질적으로 다른지 깊게 생각하지 않는다. 어차피 이것은 일탈일 뿐이고, 윤단오는 둥지로 돌아가야 하니까.",
+        notes: [],
+        imgUrl: "https://imgur.com/l5yzhJP.png",
+        comments: [
+            { author: "익명A", role: "시민", text: "하층에서 윤단오 닮은 사람 봄" },
+            { author: "익명B", role: "시민", text: "ㅋㅋㅋ찐윤단오는 하층 더러워서 오지도 않을듯", replyTo: 0 }
+        ]
+    },
+    {
+        id: "CH-014",
+        name: "천 선",
+        role: "contractor",
+        age: "24",
+        sex: "남",
+        height: "187cm",
+        org: "흥신소 · 흑야",
+        weapon: "육환장",
+        ability: "맹독",
+        abilityDesc: "체내에 맹독이 흐른다",
+        taboo: "[[본인 요청으로 삭제]]",
+        traits: ["C사 둥지 도련님…의 친구", "도련님 수혈팩", "타칭 양아치 땡중"],
+        desc: "*네 이름은 뜻이 뭐야?*\n*하늘 천에 신선 선이요.*\n*……저번엔 개과천선의 천선이라며?*\n*그때는 그런 기분이었나 보죠.*\n\n윤단오가 몰래 집안을 빠져나와 하층으로 향할 때면 늘 따라 붙는 발걸음이 있다. 반 박자 늦게, 골목의 모퉁이마다 일부러 소리를 죽이지 않는 걸음이었다. 윤단오는 한 번도 뒤를 돌아본 적이 없고, 발걸음도 한 번도 거리를 좁힌 적이 없다. 집안에는 오늘도 이상 없음이라는 보고가 올라갔을 것이다. 천선은 언제나 그런 문장을 아주 그럴듯하게 쓴다. 두 사람은 하층의 불빛 아래에서 나란히 걷지 않고, 그렇다고 멀어지지도 않은 채, 비로소 셋이 되었을 때에만 동료 구색을 갖추었다.",
+        notes: [],
+        imgUrl: "https://imgur.com/KnTuyrQ.png",
+        comments: [
+            { author: "익명A", role: "시민", text: "C사 보디가드인가? 아님 용병? 흠…" },
+            { author: "익명B", role: "시민", text: "둥지 쪽 사람이에요? 스님 비슷한 건 줄;" },
+            { author: "익명C", role: "시민", text: "야이씨 이렇게 다니는 스님이 어딨음", replyTo: 1 }
+        ]
+    },
+    {
+        id: "CH-015",
+        name: "류정우",
+        role: "contractor",
+        age: "24",
+        height: "185cm",
+        org: "인디밴드 · 언더코어",
+        weapon: "활",
+        ability: "괴력",
+        abilityDesc: "단순하게, 정말 힘이 세다",
+        taboo: "약속을 어긴다",
+        traits: ["명중률 0.2%", "G구 ‘아틀라스’ 출신", "선하고 다정한"],
+        desc: "떠나던 날, 그는 가족 앞에서 큰소리를 쳤다. 도시에서 가장 뛰어난 가수가 되겠다고. 외진 해안 마을의 소년이 하기엔 우스운 말이었고, 가족은 웃으며 손을 흔들어 주었다. 류정우는 그 약속을 지켰다고 말할 수 없다. 별이 되기도 전에 돌아갈 곳이 먼저 사라졌기 때문이다. 그렇다고 어기지도 않았다. 그는 아직 무대에 서고 있고, 아직 노래하고, 아직 그 약속의 끝에 도착하지 못한 사람이다.\n\n사람들은 그를 다정하고 단단한 리더로 기억한다. 그 단단함이 어디에 뿌리를 내리고 있는지 아는 사람은 많지 않다. 뿌리가 내려앉은 자리는 이제 이 도시 어디에도 없다.",
+        notes: [],
+        imgUrl: "https://i.imgur.com/59WN4yN.png",
+        comments: [
+            { author: "익명A", role: "시민", text: "공연하다가 짭새 떠서 튀는 거 인상적이었음" },
+            { author: "익명B", role: "시민", text: "활 들고 근접전 하던게 이분인가요", replyTo: 0 },
+            { author: "익명C", role: "시민", text: "이분이 저희 가게 간판 박살냈어요ㅜ 고의는 아니었던 거 같지만" }
+        ]
+    },
+    {
+        id: "CH-016",
+        name: "최하루",
+        role: "contractor",
+        age: "24",
+        sex: "남",
+        height: "179cm",
+        org: "인디밴드 · 언더코어",
+        weapon: "나이프",
+        ability: "와이어",
+        abilityDesc: "끊어지지 않는 거미줄을 다룬다",
+        taboo: "사랑하길 포기한다",
+        traits: ["전 육상 선수", "언더코어 베이스", "웃음이 시원한 쾌남"],
+        desc: "어느 날, 날개가 꺾였다. 최하루는 그 당시의 일을 오래 이야기하지 않는다. 누군가 물으면 그저 웃으며 다리 하나가 좀 시끄러웠다고 답하고, 곧바로 오늘 저녁 메뉴로 화제를 돌린다. 트랙 위에서 이름이 불리던 소년은 그렇게 사라졌고, 그 자리에는 왼쪽 걸음이 반 박자 늦는 사람이 남았다.\n\n그는 달리는 일을 그만두었다. 대신 뛰어드는 일을 시작했다. 같은 다리로, 더 위험한 곳을 향해서. 나는 방법을 바꿨을 뿐이라고 그는 말한다. 사람의 꿈은 끝나지 않으니까. 그 말이 진심인지 주문인지는, 아직 그도 구분하지 않기로 한 것 같다.",
+        notes: [],
+        imgUrl: "https://i.imgur.com/vqYLsZJ.png",
+        comments: [
+            { author: "익명A", role: "시민", text: "퇴물쉑ㅋㅋ" },
+            { author: "익명B", role: "시민", text: "OOO선수 얘랑 엮여서 징계 받음. 그때 여론 나락갔던 거 생각하면 아직도 짜증난다" }
+        ]
+    },
+    {
+        id: "CH-017",
+        name: "유재하",
+        role: "contractor",
+        age: "24",
+        sex: "남",
+        height: "184cm",
+        org: "인디밴드 · 언더코어",
+        weapon: "저격총",
+        ability: "예지안",
+        abilityDesc: "대상의 1초 뒤 움직임을 파악할 수 있다",
+        taboo: "도망치는 것을 쫓는다",
+        traits: ["기업에 대한 혐오가 남다름", "언더코어 키보드", "건조덤덤충"],
+        desc: "한때 그는 이름이 걸린 무대 위에서 노래하던 사람이었다. *축복 받은 원석.* 그렇게 평가 받던 유재하는 C사의 투자자들을 꽤 많이 불러 모았고, 너도나도 숟가락 한번 얹으려 앞다투던 경험도 있었다. 수많은 러브콜. 수많은 무대. 그렇게 혹사 당한 성대가 갈라지는 건 예정된 일이었을지도 모른다.\n\n지금 그 이야기를 꺼내면 그는 담배를 한 모금 들이마시고, 다른 이야기를 시작한다. 목소리가 낮고 조용한 사람이라, 그 화제가 바뀐 순간을 눈치채는 사람은 드물다. 누군가는 그가 차갑다고 말한다. 화가 난 동료에게는 이유부터 묻고, 흥분한 상대에게는 조용히 사실만 늘어놓으며, 가끔 이유 없이 짜증을 내기 때문이다. 하지만 다정한 천성은 어딜 가지 않아서 완전히 모질게 대하지는 못한다.",
+        notes: [],
+        imgUrl: "https://i.imgur.com/QXBZRM7.png",
+        comments: [
+            { author: "익명A", role: "시민", text: "이분 가수 아니었음?? 왜 범죄자됐냐" },
+            { author: "익명B", role: "시민", text: "토사구팽이지 뭐", replyTo: 0 },
+            { author: "익명C", role: "시민", text: "본인 C사 정직원인데 나 보자마자 노골적으로 기분 나쁜 티 내더라 ㅋㅋ" }
+        ]
+    },
+    {
+        id: "CH-018",
+        name: "선우 진",
+        role: "contractor",
+        age: "24",
+        sex: "남",
+        height: "183cm",
+        org: "인디밴드 · 언더코어",
+        weapon: "이도",
+        ability: "환시",
+        abilityDesc: "사물에 얽힌 기억을 볼 수 있다",
+        taboo: "나보다 타인을 사랑한다",
+        traits: ["가출한 남초딩", "언더코어 드럼", "과거 가족이 악마에게 침탈 당했다는 소문"],
+        desc: "선우 진은 장난기 어린 눈으로 세상을 봤다 —마치 아무것도 무겁지 않다는 듯이. 아무것도 무섭지 않다는 듯이. 그는 낡은 무대 위에서 스틱을 돌리며 웃었고, 화가 난 사람 앞에서도 깐족거리기를 멈추지 않았으며, 악마의 이빨이 코앞에서 닫히던 순간에도 한 박자 늦게 웃었다. 사람들은 그걸 배짱이라고 불렀다. 하지만 그가 겁이 없어서 웃는 게 아니라는 걸 눈치챈 사람은 거의 없다.\n\n그는 가장 익숙한 사람이, 하루 아침 가장 낯선 존재로 변하는 것을 이미 한번 경험해봤다. 인간의 영혼이 얼마나 연약한지도 그때 알게 되었다. 그렇기에 선우 진은 무기를 들고 그대로 집을 뛰쳐나왔다. 스스로의 영혼을 기업 같은 놈들에게 맡길 수 없다며. 딱 제 영혼의 무게만큼 책임을 짊어지니 나머지는 죄다 가벼워질 수밖에 없었다. 무게를 덜기 위해, 집에 두고 나온 것은…….",
+        notes: [],
+        imgUrl: "https://imgur.com/kIeFHmJ.png",
+        comments: [
+            { author: "익명A", role: "시민", text: "형은 현장팀에서 구르는데 동생이라는 놈이 ㅋㅋ" },
+            { author: "익명B", role: "시민", text: "선우 현 진짜 쪽팔릴듯;", replyTo: 0 },
+            { author: "익명C", role: "시민", text: "이분 맨날 A구 근처만 돌아다니던데, 신고하면 포상금 먹을 수 있나요?" }
+        ]
+    },
+    {
+        id: "CH-019",
+        name: "신성운",
+        role: "contractor",
+        age: "24",
+        sex: "남",
+        height: "185cm",
+        org: "개인 계약자",
+        weapon: "레이피어",
+        ability: "타성 복제",
+        abilityDesc: "능력·외견·목소리 등 타인의 성질을 복제할 수 있다",
+        taboo: "타인을 우러러본다",
+        traits: ["자연발생 또라이", "이상형은 나보다 강한 사람", "취미는 기만"],
+        desc: "신성운을 향해 나오는 평가들은 대개 부정적이다.*위아래도 모르는 막돼먹은 놈!*, *버르장머리가 없다*, *내 도시에서 나가!(?)*…등등. 하지만 신성운을 제대로 파악한 사람들은 다르게 말했다. 저건, 위아래를 너무나 잘 알아서 나오는 태도였다.\n\n그는 인생에서 간절했던 적이 없다. 간절하지 않으니 추해지지도 않고, 손해를 감수할 일도 없으며, 언제나 고고하게 타인 위에 군림할 수 있었다. 태어나길 머리 꼭대기에 있는 사람. 그는 세상을 내려다보며 말한다. *버르장머리 없는 건, 큰소리만 쳐대는 너희들 아니야?*\n\n신성운은 어느 팀에서도 오래 앉아 있지 못한다. 객원으로 들어가 사흘 만에 그 팀의 전투법을 익히고, 나흘째에는 그들보다 그것을 더 잘 쓴다. 상대가 무엇을 숨기고 있는지 알아도 그는 모른 체 웃어 주고, 그 웃음 뒤에서 가장 편한 자세를 찾는다. 최근 그의 이름 뒤에는 두 줄의 기록이 붙었다. 기업이 관리하던 던전 하나가 일언반구 없이 소멸했고, 아케론은 그를 쫓아냈다.",
+        notes: [],
+        imgUrl: "https://imgur.com/ZEkpLVT.png",
+        comments: [
+            { author: "익명A", role: "시민", text: "그냥 분탕이 좋은 새끼" },
+            { author: "익명B", role: "시민", text: "노는 게 제일 좋은 새끼" },
+            { author: "익명C", role: "시민", text: "이제 없으면 좀 허전해지는 새끼…." }
+        ]
+    }
+];
+// 팀 구성: members에 캐릭터 id를 적으면 팀이 채워지고, 어느 팀에도 없는 캐릭터는 자동으로 '개인' 탭에 표시됩니다.
+        // members가 비어 있으면 "COMING SOON" 카드로 표시됩니다. logo.style: doberman | dayoff | heiya | undercore (CSS의 .logo-* 참고)
+        const TEAMS = [
+            { id: "doberman", name: "도베르만", group: "아케론 현장대응팀", unit: "아케론 현장대응1팀",
+              logo: { text: "Doberman", style: "doberman" },
+              groupDesc: "24시간 무기 소지가 가능한 대신 악마 제거·고위험 던전 클리어·미등록자 추적·이상현상 대응 등 온갖 궂은일을 담당한다",
+              tagline: "도시 내 최고 인지도! 최고의 인기! 던전 최다호출 팀!",
+              intro: "오직 대의 하나로 공무직 월급 받으면서 시달리긴 오지게 시달리는 분들이다.",
+              members: ["CH-001", "CH-002", "CH-003", "CH-004"] },
+            { id: "dayoff", name: "데이오프", group: "아케론 현장대응팀", unit: "아케론 현장대응2팀",
+              logo: { text: "Day Off", style: "dayoff" },
+              groupDesc: "24시간 무기 소지가 가능한 대신 악마 제거·고위험 던전 클리어·미등록자 추적·이상현상 대응 등 온갖 궂은일을 담당한다",
+              tagline: "",
+              intro: "베테랑으로 구성된 1팀과는 다르게 신예 계약자 육성을 위주로 구성되었다. 1팀이 쌓아둔 정갈한 신뢰도를 실시간으로 까먹으면서도, 현장에 던져놓으면 어떻게든 판을 비틀어버리는 아케론의 문제아들. 장점이 있다면… 1팀보다는 분위기가 좋다는 것 정도.",
+              members: ["CH-005", "CH-006", "CH-007", "CH-008"] },
+            { id: "heiya", name: "흑야", group: "도시의 사람들", unit: "흥신소 · D구 하층",
+              logo: { text: "黑夜", style: "heiya" },
+              groupDesc: "",
+              tagline: "달 없는 밤, 야차가 아수라를 바로잡는다.",
+              intro: "D구 하층에 위치. 일단은 흥신소로 분류되지만, 정보상·밀거래·회수업 겸 하층 보호 등 별 일을 다 맡는다. 사실상 하층의 ‘해결사무소’.",
+              members: ["CH-012", "CH-013", "CH-014"] },
+            { id: "undercore", name: "언더코어", group: "도시의 사람들", unit: "인디밴드 · C구 하층",
+              logo: { text: "UnderCore", style: "undercore" },
+              groupDesc: "",
+              tagline: "",
+              intro: "C구 하층에 위치한 LP바 블루 레코드. 그곳에는 매주 토요일마다 공연을 하는 밴드가 있다.\n\n아는 사람에게만 알음알음 알려진 실력자 밴드지만, 실상은 의뢰를 수주 받고 사건을 해결하는 계약자 클랜이다.\n\n시작은 교실 구석, 곰팡이 냄새가 나던 낡은 동아리실이었다. 방과 후마다 싸구려 악기를 두드리며 노래하던 소년들은, 졸업장을 쥐기 무섭게 도시라는 거대한 톱니바퀴 속으로 각자 파묻혔다. 비정한 모서리에 부딪히며 밀려나고 밀려난 끝에 다다른 곳은, 아이러니하게도 서로의 온기 말고는 아무것도 남지 않은 이 어두운 지하 골목이었다.",
+              members: ["CH-015", "CH-016", "CH-017", "CH-018"] }
+        ];
+
+        const ROLE_LABEL = { contractor: '계약자', guide: '가이드', other: '기타' };
+        const ROLE_ICON = { contractor: 'fa-user-shield', guide: 'fa-star', other: 'fa-user' };
+        const charGrid = document.getElementById('char-grid');
+        const charEmpty = document.getElementById('char-empty');
+        const charDetail = document.getElementById('char-detail');
+        const teamView = document.getElementById('team-view');
+        const tvScroll = document.getElementById('tv-scroll');
+        const tvMembers = document.getElementById('tv-members');
+        const tvIntro = document.getElementById('tv-intro');
+        const tvNav = document.getElementById('tv-nav');
+        let charTab = 'teams';
+        let charLastFocus = null, teamLastFocus = null, teamObserver = null;
+
+        function el(tag, className, text) {
+            const node = document.createElement(tag);
+            if (className) node.className = className;
+            if (text !== undefined) node.textContent = text;
+            return node;
+        }
+        const pad2 = n => String(n).padStart(2, '0');
+        const charById = id => CHARACTERS.find(c => c.id === id);
+        const teamMemberIds = () => new Set(TEAMS.flatMap(t => t.members));
+        const soloCharacters = () => { const used = teamMemberIds(); return CHARACTERS.filter(c => !used.has(c.id)); };
+
+        // 소개문 서식: **굵게**, *기울임*, [[삭제 글리치]]  (줄바꿈은 \n, 문단 사이 빈 줄은 \n\n)
+        // innerHTML을 쓰지 않고 DOM으로 만들기 때문에 안전합니다.
+        function appendRich(parent, text) {
+            String(text).split(/(\[\[[^\]\n]+\]\]|\*\*[^*\n]+\*\*|\*[^*\n]+\*)/g).forEach(part => {
+                if (!part) return;
+                if (part.length > 4 && part.startsWith('[[') && part.endsWith(']]')) {
+                    const g = el('span', 'glitch', part.slice(2, -2));
+                    g.dataset.text = g.textContent;
+                    parent.appendChild(g);
+                    return;
+                }
+                if (part.length > 4 && part.startsWith('**') && part.endsWith('**')) parent.appendChild(el('strong', '', part.slice(2, -2)));
+                else if (part.length > 2 && part.startsWith('*') && part.endsWith('*')) parent.appendChild(el('em', '', part.slice(1, -1)));
+                else parent.appendChild(document.createTextNode(part));
+            });
+            return parent;
+        }
+
+        function makeGlyph(role) {
+            const i = el('i', 'glyph fa-solid ' + (ROLE_ICON[role] || ROLE_ICON.other));
+            i.setAttribute('aria-hidden', 'true');
+            return i;
+        }
+
+        function makePortrait(c) {
+            const wrap = el('div', 'char-portrait');
+            if (c.imgUrl) {
+                const img = document.createElement('img');
+                img.alt = c.name;
+                img.loading = 'lazy';
+                img.onerror = () => { img.onerror = null; img.replaceWith(makeGlyph(c.role)); };
+                img.src = c.imgUrl;
+                wrap.appendChild(img);
+            } else {
+                wrap.appendChild(makeGlyph(c.role));
+            }
+            return wrap;
+        }
+
+        /* ---------- 시민 반응 (채팅 말풍선 + 답글 스레드) ---------- */
+        function makeCommentRow(m, replyToAuthor) {
+            const row = el('div', 'cm-row' + (replyToAuthor ? ' is-reply' : ''));
+
+            const author = String(m.author || '익명');
+            const hash = [...author].reduce((a, ch) => (a * 31 + ch.charCodeAt(0)) | 0, 7);
+            const avatar = el('div', 'cm-avatar', author.slice(-1));
+            avatar.style.setProperty('--h', Math.abs(hash) % 360);
+            avatar.setAttribute('aria-hidden', 'true');
+
+            const meta = el('div', 'cm-meta');
+            meta.appendChild(el('span', 'cm-author', author));
+            if (m.role) meta.appendChild(el('span', 'cm-role', m.role));
+
+            const bubble = el('div', 'cm-bubble');
+            if (replyToAuthor) bubble.appendChild(el('span', 'cm-mention', '@' + replyToAuthor));
+            bubble.appendChild(document.createTextNode(m.text));
+
+            const main = el('div', 'cm-main');
+            main.append(meta, bubble);
+            row.append(avatar, main);
+            return row;
+        }
+
+        // replyTo(부모 댓글 순번)가 있는 댓글은 부모 스레드에 이어 붙고, 연결선 + @멘션으로 표시된다.
+        function buildComments(list) {
+            if (!list || !list.length) return null;
+            const box = el('section', 'cm-box');
+            box.setAttribute('aria-label', '시민 반응');
+            const title = el('div', 'cm-title');
+            const icon = el('i', 'fa-solid fa-comments');
+            icon.setAttribute('aria-hidden', 'true');
+            title.append(icon, document.createTextNode('CITIZEN CHAT'));
+            box.appendChild(title);
+
+            const parentOf = list.map((m, i) => (Number.isInteger(m.replyTo) && m.replyTo >= 0 && m.replyTo < i) ? m.replyTo : -1);
+            const rootOf = [];
+            const threads = new Map();
+            list.forEach((m, i) => {
+                const root = parentOf[i] === -1 ? i : rootOf[parentOf[i]];
+                rootOf[i] = root;
+                if (!threads.has(root)) threads.set(root, []);
+                threads.get(root).push(i);
+            });
+
+            threads.forEach((idxs, root) => {
+                const thread = el('div', 'cm-thread');
+                thread.appendChild(makeCommentRow(list[root], null));
+                const replies = idxs.filter(i => i !== root);
+                if (replies.length) {
+                    const wrap = el('div', 'cm-replies');
+                    replies.forEach(i => wrap.appendChild(makeCommentRow(list[i], list[parentOf[i]].author)));
+                    thread.appendChild(wrap);
+                }
+                box.appendChild(thread);
+            });
+            return box;
+        }
+
+        /* ---------- 캐릭터 시트 (팀 상세 / 개인 모달 공용) ---------- */
+        function buildMemberSheet(c) {
+            const sheet = el('article', 'member-sheet');
+            const left = el('div', 'ms-portrait');
+            left.appendChild(makePortrait(c));
+
+            const right = el('div', 'ms-info');
+            const codeParts = [c.id, ROLE_LABEL[c.role] || ROLE_LABEL.other];
+            if (c.position) codeParts.push(c.position);
+            right.append(el('span', 'ms-code cap', codeParts.join(' · ')), el('h3', 'ms-name', c.name));
+
+            // 특이사항 → 태그, (없으면 summary)
+            if (c.traits && c.traits.length) {
+                const tags = el('div', 'ms-traits');
+                c.traits.forEach(t => tags.appendChild(appendRich(el('span', 'ms-trait'), t)));
+                right.appendChild(tags);
+            } else if (c.summary) {
+                right.appendChild(appendRich(el('p', 'ms-summary'), c.summary));
+            }
+
+            // 정보표: 가이드는 GRADE, 그 외는 AGE. 값이 없는 칸은 자동으로 생략.
+            const gradeText = c.grade ? (String(c.grade).length === 1 ? `${c.grade}급` : c.grade) : '';
+            const rows = [
+                c.role === 'guide' ? ['GRADE', gradeText] : ['AGE', ageLabel(c)],
+                ['SEX', c.sex], ['HEIGHT', c.height], ['ORG', c.org], ['WEAPON', c.weapon],
+                ['ABILITY', c.ability, c.abilityDesc], ['TABOO', c.taboo]
+            ];
+            const fields = el('dl', 'ms-fields');
+            rows.forEach(([k, v, sub]) => {
+                if (!v) return;
+                const dd = appendRich(el('dd'), v);
+                if (sub) dd.appendChild(appendRich(el('small', 'ms-sub'), sub));
+                fields.append(el('dt', '', k), dd);
+            });
+            right.appendChild(fields);
+
+            if (c.desc) right.appendChild(appendRich(el('p', 'ms-desc'), c.desc));
+
+            // 돋보기 주석 (용어 설명 등)
+            (c.notes || []).forEach(n => {
+                const box = el('aside', 'ms-note');
+                const icon = el('i', 'fa-solid fa-magnifying-glass');
+                icon.setAttribute('aria-hidden', 'true');
+                const body = el('div', 'ms-note-body');
+                body.append(el('strong', 'ms-note-term', n.term), appendRich(el('p', 'ms-note-text'), n.text));
+                box.append(icon, body);
+                right.appendChild(box);
+            });
+
+            const comments = buildComments(c.comments);
+            if (comments) right.appendChild(comments);
+
+            sheet.append(left, right);
+            return sheet;
+        }
+
+        /* ---------- 목록 렌더링 ---------- */
+        // 가이드(role: 'guide')만 등급(GRADE)을 표시하고, 그 외에는 나이(AGE)를 표시한다.
+        function ageLabel(c) {
+            if (c.age === undefined || c.age === null || String(c.age).trim() === '') return '—';
+            return /^\d+$/.test(String(c.age).trim()) ? `${String(c.age).trim()}세` : String(c.age);
+        }
+
+        function makeLogo(t) {
+            const wrap = el('span', 'logo logo-' + t.logo.style);
+            wrap.setAttribute('aria-hidden', 'true');
+            if (t.logo.style === 'dayoff') {
+                [...t.logo.text].forEach((ch, i) => {
+                    const span = el('span', 'ch', ch === ' ' ? '\u00a0' : ch);
+                    span.style.setProperty('--i', i);
+                    wrap.appendChild(span);
+                });
+            } else {
+                wrap.textContent = t.logo.text;
+            }
+            return wrap;
+        }
+
+        function renderTeams() {
+            charGrid.className = 'char-grid mode-teams';
+            charGrid.replaceChildren();
+            charEmpty.classList.add('hidden');
+            TEAMS.forEach((t, idx) => {
+                const members = t.members.map(charById).filter(Boolean);
+                const empty = members.length === 0;
+                const card = el('button', 'team-card' + (empty ? ' is-empty' : ''));
+                card.type = 'button';
+
+                const logoBox = el('div', 'tc-logo');
+                logoBox.appendChild(makeLogo(t));
+
+                card.append(el('span', 'tc-no', `TEAM ${pad2(idx + 1)}`), logoBox, el('h3', 'tc-name', t.name));
+                if (t.unit) card.appendChild(el('p', 'tc-unit', t.unit));
+                if (t.tagline) card.appendChild(el('p', 'tc-tagline', t.tagline));
+                card.appendChild(el('div', 'tc-meta', empty ? '기록 준비 중' : `MEMBERS ${pad2(members.length)}`));
+                card.appendChild(el('span', 'tc-cta', empty ? 'COMING SOON' : 'OPEN FILE  →'));
+
+                if (empty) {
+                    card.disabled = true;
+                    card.setAttribute('aria-label', `${t.unit} — 기록 준비 중`);
+                } else {
+                    card.setAttribute('aria-label', `${t.name} (${t.unit}) 팀원 정보 보기`);
+                    card.addEventListener('click', () => openTeamView(t.id));
+                }
+                charGrid.appendChild(card);
+            });
+        }
+
+        function renderSolo() {
+            charGrid.className = 'char-grid mode-solo';
+            charGrid.replaceChildren();
+            const list = soloCharacters();
+            list.forEach(c => {
+                const card = el('button', 'char-card');
+                card.type = 'button';
+                card.setAttribute('aria-label', `${c.name} 상세 보기`);
+
+                const portrait = makePortrait(c);
+                portrait.appendChild(el('span', 'char-badge ' + c.role, ROLE_LABEL[c.role] || ROLE_LABEL.other));
+                if (c.role === 'guide' && c.grade) portrait.appendChild(el('span', 'char-grade', c.grade));
+
+                const body = el('div', 'char-body');
+                body.appendChild(el('div', 'code', c.role === 'guide' ? c.id : `${c.id} · ${ageLabel(c)}`));
+                body.appendChild(el('h3', '', c.name));
+                body.appendChild(el('p', '', (c.traits && c.traits.length) ? c.traits.join(' · ') : (c.summary || '')));
+
+                card.append(portrait, body);
+                card.addEventListener('click', () => openCharacterDetail(c.id));
+                charGrid.appendChild(card);
+            });
+            charEmpty.textContent = '소속 없는 캐릭터의 기록이 아직 없습니다.';
+            charEmpty.classList.toggle('hidden', list.length > 0);
+        }
+
+        function renderCharacters() {
+            if (charTab === 'teams') renderTeams(); else renderSolo();
+            document.getElementById('char-count').textContent = CHARACTERS.length;
+        }
+
+        document.querySelectorAll('.char-filter').forEach(btn => {
+            btn.addEventListener('click', () => {
+                charTab = btn.dataset.tab;
+                document.querySelectorAll('.char-filter').forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
+                renderCharacters();
+            });
+        });
+
+        /* ---------- 개인 캐릭터 모달 ---------- */
+        function openCharacterDetail(id) {
+            const c = charById(id);
+            if (!c) return;
+            charLastFocus = document.activeElement;
+            const body = document.getElementById('cd-body');
+            body.replaceChildren(buildMemberSheet(c));
+            body.scrollTop = 0;
+            charDetail.setAttribute('aria-label', `${c.name} 상세`);
+            charDetail.classList.add('open');
+            document.getElementById('cd-close').focus();
+        }
+
+        function closeCharacterDetail() {
+            if (!charDetail.classList.contains('open')) return;
+            charDetail.classList.remove('open');
+            if (charLastFocus && typeof charLastFocus.focus === 'function') charLastFocus.focus();
+            charLastFocus = null;
+        }
+
+        document.getElementById('cd-close').addEventListener('click', closeCharacterDetail);
+        document.getElementById('char-detail-backdrop').addEventListener('click', closeCharacterDetail);
+
+        /* ---------- 팀 상세 (팀원이 세로로 이어지는 화면) ---------- */
+        function openTeamView(teamId) {
+            const t = TEAMS.find(x => x.id === teamId);
+            if (!t) return;
+            const members = t.members.map(charById).filter(Boolean);
+            if (!members.length) return;
+            teamLastFocus = document.activeElement;
+
+            document.getElementById('tv-unit').textContent = t.unit;
+            const tvName = document.getElementById('tv-name');
+            tvName.setAttribute('aria-label', t.name);
+            tvName.replaceChildren(makeLogo(t));
+            teamView.setAttribute('aria-label', `${t.name} 팀 정보`);
+            tvMembers.replaceChildren();
+            tvNav.replaceChildren();
+
+            tvIntro.replaceChildren();
+            if (t.group) tvIntro.appendChild(el('span', 'tv-group cap', t.group));
+            if (t.groupDesc) tvIntro.appendChild(appendRich(el('p', 'tv-groupdesc'), t.groupDesc));
+            if (t.tagline) tvIntro.appendChild(appendRich(el('p', 'tv-tagline'), t.tagline));
+            if (t.intro) tvIntro.appendChild(appendRich(el('p', 'tv-introtext'), t.intro));
+
+            members.forEach((m, i) => {
+                const section = el('section', 'tv-member');
+                section.append(el('div', 'tv-index', `${pad2(i + 1)} / ${pad2(members.length)}`), buildMemberSheet(m));
+                tvMembers.appendChild(section);
+
+                const chip = el('button', 'tv-chip', m.name);
+                chip.type = 'button';
+                chip.addEventListener('click', () => section.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+                tvNav.appendChild(chip);
+            });
+            tvNav.children[0].classList.add('on');
+
+            teamView.classList.add('open');
+            tvScroll.scrollTop = 0;
+
+            // 스크롤 위치에 맞춰 상단 팀원 칩 강조
+            if (teamObserver) teamObserver.disconnect();
+            if ('IntersectionObserver' in window) {
+                teamObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(en => {
+                        if (!en.isIntersecting) return;
+                        const idx = Array.prototype.indexOf.call(tvMembers.children, en.target);
+                        Array.prototype.forEach.call(tvNav.children, (chip, k) => chip.classList.toggle('on', k === idx));
+                    });
+                }, { root: tvScroll, rootMargin: '-35% 0px -60% 0px', threshold: 0 });
+                Array.prototype.forEach.call(tvMembers.children, s => teamObserver.observe(s));
+            }
+            document.getElementById('tv-back').focus();
+        }
+
+        function closeTeamView() {
+            if (!teamView.classList.contains('open')) return;
+            teamView.classList.remove('open');
+            if (teamObserver) { teamObserver.disconnect(); teamObserver = null; }
+            if (teamLastFocus && typeof teamLastFocus.focus === 'function') teamLastFocus.focus();
+            teamLastFocus = null;
+        }
+        document.getElementById('tv-back').addEventListener('click', closeTeamView);
+
+        // Escape: 가장 위에 열린 패널부터 닫기
+        document.addEventListener('keydown', (e) => {
+            if (e.key !== 'Escape') return;
+            if (charDetail.classList.contains('open')) closeCharacterDetail();
+            else if (teamView.classList.contains('open')) closeTeamView();
+            else if (selectedDistrictId) closeSidebar();
+        });
+
+        renderCharacters();
+
+        /* ---------- 삭제 글리치: 가끔 글자가 잠깐 깨졌다 돌아옴 ---------- */
+        (function () {
+            if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+            const NOISE = '█▓▒░#@%&▌▐';
+            function burst(node) {
+                const orig = node.dataset.text;
+                if (!orig) return;
+                const chars = Array.from(orig);
+                const idx = [];
+                chars.forEach((c, i) => { if (!/\s/.test(c)) idx.push(i); });
+                if (!idx.length) return;
+                const n = Math.min(idx.length, 1 + Math.floor(Math.random() * 2));
+                for (let k = 0; k < n; k++) chars[idx[Math.floor(Math.random() * idx.length)]] = NOISE[Math.floor(Math.random() * NOISE.length)];
+                node.textContent = chars.join('');
+                setTimeout(() => { node.textContent = orig; }, 140);
+            }
+            setInterval(() => {
+                document.querySelectorAll('.glitch').forEach(n => { if (n.offsetParent && Math.random() < 0.5) burst(n); });
+            }, 2200);
+        })();
+
+        /* ---------- 스크롤 등장 효과 (인용구 / 프롤로그) ---------- */
+        (function () {
+            const items = Array.from(document.querySelectorAll('.reveal'));
+            const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (!('IntersectionObserver' in window) || reduce) { items.forEach(i => i.classList.add('in')); return; }
+            const io = new IntersectionObserver((entries) => {
+                let k = 0;
+                entries.forEach(en => {
+                    if (!en.isIntersecting) return;
+                    en.target.style.setProperty('--d', (k++ * 0.15) + 's');
+                    en.target.classList.add('in');
+                    io.unobserve(en.target);
+                });
+            }, { threshold: 0.35, rootMargin: '0px 0px -8% 0px' });
+            items.forEach(i => io.observe(i));
+        })();
+    </script>
+</body>
+</html>
